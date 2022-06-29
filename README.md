@@ -1,1 +1,3 @@
-# pimon
+# PiMon
+
+System monitoring application.
