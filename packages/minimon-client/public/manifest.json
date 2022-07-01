@@ -1,0 +1,35 @@
+{
+  "short_name": "Minimon",
+  "name": "Simple system monitor",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "minimon_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "minimon_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "minimon_1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "minimon_2048.png",
+      "type": "image/png",
+      "sizes": "2048x2048"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

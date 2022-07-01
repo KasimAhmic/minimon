@@ -1,0 +1,39 @@
+{
+  "name": "@ahmic/minimon-core",
+  "version": "0.0.1",
+  "description": "Minimon core",
+  "author": {
+    "name": "Kasim Ahmić",
+    "email": "kasim.ahmic@gmail.com",
+    "url": "https://kasimahmic.com/"
+  },
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/**/*.js"
+  },
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dist/index.d.ts": [
+        "dist/index.d.ts"
+      ],
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "start:dev": "tsc --watch",
+    "prebuild": "rimraf dist",
+    "build": "tsc --build",
+    "reset": "rimraf dist"
+  },
+  "dependencies": {}
+}
