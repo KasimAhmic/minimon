@@ -52,5 +52,22 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "always",
+        [
+          "sentence-case"
+        ]
+      ]
+    }
+  },
+  "lint-staged": {
+    "pacakges/**/src/*.{js,css,md,ts,tsx}": "prettier --write"
   }
 }
