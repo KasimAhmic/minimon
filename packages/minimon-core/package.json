@@ -30,7 +30,7 @@
     "dist/"
   ],
   "scripts": {
-    "start:dev": "tsc --watch",
+    "start:dev": "tsc --watch --preserveWatchOutput",
     "prebuild": "rimraf dist",
     "build": "tsc --build",
     "reset": "rimraf dist"
