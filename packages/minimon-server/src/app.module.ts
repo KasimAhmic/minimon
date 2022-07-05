@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { piMonConfigSchema } from './common/config.schema';
 import * as si from 'systeminformation';
 import { StatsModule } from './stats/stats.module';
+import { platform } from 'os';
 
 @Module({
   imports: [
@@ -30,6 +31,8 @@ export class AppModule implements OnApplicationShutdown {
   onApplicationShutdown(signal?: string): void {
     this.logger.warn(`Application shutting down. Signal: ${signal}`);
 
-    si.powerShellRelease();
+    if (platform() === 'win32') {
+      si.powerShellRelease();
+    }
   }
 }

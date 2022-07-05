@@ -7,6 +7,7 @@ import * as si from 'systeminformation';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { StatsController } from './stats.controller';
 import { networkInterfaceProvider } from './network-interface.provider';
+import { platform } from 'os';
 
 @Module({
   imports: [ConfigModule],
@@ -24,7 +25,9 @@ export class StatsModule implements OnModuleInit {
   ) {}
 
   async onModuleInit(): Promise<void> {
-    si.powerShellStart();
+    if (platform() === 'win32') {
+      si.powerShellStart();
+    }
 
     await this.statsService.updateStats();
 
