@@ -9,10 +9,10 @@ export type DefaultNetworkInterface = {
 export const networkInterfaceProvider = {
   provide: DEFAULT_NETWORK_INTERFACE,
   useFactory: async (): Promise<DefaultNetworkInterface> => {
+    const defaultInterfaceName = await si.networkInterfaceDefault();
     const interfaces = await si.networkInterfaces();
 
-    // @ts-ignore
-    const defaultInterface = interfaces.find((iface) => iface.default);
+    const defaultInterface = interfaces.find((iface) => iface.iface === defaultInterfaceName);
 
     const name = defaultInterface.ifaceName;
     const speed = defaultInterface.speed * 1000;
