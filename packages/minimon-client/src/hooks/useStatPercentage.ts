@@ -11,14 +11,15 @@ export const useStatPercentage = (
   value: number | SystemStatsSelector,
   min: number | SystemStatsSelector,
   max: number | SystemStatsSelector,
+  normalize: boolean = false,
 ): StatPercentage => {
   const currentValue = useStatsSelector((stats) => (typeof value === 'number' ? value : value(stats)));
   const minValue = useStatsSelector((stats) => (typeof min === 'number' ? min : min(stats)));
   const maxValue = useStatsSelector((stats) => (typeof max === 'number' ? max : max(stats)));
 
   const normalizedValue = useMemo<number>(
-    () => normalizeToPercentage(currentValue, [minValue, maxValue], [0, 75]),
-    [currentValue, maxValue, minValue],
+    () => (normalize ? normalizeToPercentage(currentValue, [minValue, maxValue], [0, 75]) : currentValue),
+    [currentValue, maxValue, minValue, normalize],
   );
 
   const formattedValue = currentValue.toFixed(2) + '%';

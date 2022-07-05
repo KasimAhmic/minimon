@@ -51,7 +51,7 @@ export interface DialProps {
 export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100 }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max);
+  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max, true);
 
   return (
     <div className={classes.root}>
