@@ -18,16 +18,32 @@ const minimonService = createApi({
         url: '/stats',
       }),
       onCacheEntryAdded: async (_, { updateCachedData, cacheEntryRemoved }) => {
-        const eventsource = new EventSource(`${baseUrl}/stats/stream`);
+        let eventsource: EventSource | undefined;
 
-        eventsource.onmessage = ({ data }) => {
-          updateCachedData(() => JSON.parse(data));
+        const connect = () => {
+          eventsource = new EventSource(`${baseUrl}/stats/stream`);
+
+          eventsource.onmessage = ({ data }) => {
+            updateCachedData(() => JSON.parse(data));
+          };
+
+          eventsource.onerror = () => {
+            try {
+              eventsource?.close();
+            } catch {}
+
+            eventsource = undefined;
+
+            setTimeout(() => connect(), 2000);
+          };
         };
+
+        connect();
 
         await cacheEntryRemoved;
 
         try {
-          eventsource.close();
+          eventsource?.close();
         } catch {}
       },
     }),
