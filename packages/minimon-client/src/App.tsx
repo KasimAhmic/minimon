@@ -1,12 +1,33 @@
 import React from 'react';
-import { useStatsSelector } from './hooks/useStatsSelector';
+import { Dial } from './components/Dial';
+import { makeStyles } from 'tss-react/mui';
+import { Debug } from 'components/Debug';
+import { useDebug } from 'hooks/useDebug';
+
+const useStyles = makeStyles()((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    width: '100%',
+    padding: theme.spacing(2),
+    boxSizing: 'border-box',
+  },
+}));
 
 function App() {
-  const data = useStatsSelector((data) => data.gpu.memoryUsed);
+  const { classes } = useStyles();
+
+  useDebug();
 
   return (
-    <div className='App'>
-      <pre>{data}</pre>
+    <div className={classes.root}>
+      <Dial label='CPU' value={(stats) => stats.cpu.currentLoad} />
+      <Dial label='RAM' value={(stats) => stats.ram.usedMemory} />
+      <Dial label='GPU' value={(stats) => stats.gpu.utilizationGpu} />
+      <Dial label='LAN' value={(stats) => stats.network.usage} />
+
+      <Debug />
     </div>
   );
 }
