@@ -8,7 +8,7 @@ import './index.css';
 import { DataProvider } from './app/DataProvider';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from 'theme';
 
 const container = document.getElementById('root')!;
@@ -24,6 +24,7 @@ root.render(
     <Provider store={store}>
       <CacheProvider value={muiCache}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <DataProvider />
           <App />
         </ThemeProvider>
