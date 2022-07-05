@@ -1,3 +1,3 @@
-# PiMon
+# MiniMon
 
 System monitoring application.
