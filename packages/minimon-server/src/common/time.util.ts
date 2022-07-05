@@ -1,9 +1,13 @@
-export const timed = async (timedFunction: () => Promise<void>): Promise<string> => {
+type TimedResult<T> = [T, number];
+
+export const timed = async <T = unknown>(timedFunction: () => Promise<T>): Promise<TimedResult<T>> => {
   const start = process.hrtime.bigint();
 
-  await timedFunction();
+  const result = await timedFunction();
 
   const end = process.hrtime.bigint();
 
-  return (Number(end - start) / 1e6).toFixed(3) + ' ms';
+  return [result, Number(end - start) / 1e6];
 };
+
+export const toMillis = (milliseconds: number): string => milliseconds.toFixed() + ' ms';

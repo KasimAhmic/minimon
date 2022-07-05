@@ -17,6 +17,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "preserveSymlinks": false,
-    "incremental": true
+    "sourceMap": false
   }
 }
