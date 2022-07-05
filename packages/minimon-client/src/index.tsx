@@ -6,15 +6,28 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { DataProvider } from './app/DataProvider';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { ThemeProvider } from '@mui/material';
+import { theme } from 'theme';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
+export const muiCache = createCache({
+  key: 'mui',
+  prepend: true,
+});
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <DataProvider />
-      <App />
+      <CacheProvider value={muiCache}>
+        <ThemeProvider theme={theme}>
+          <DataProvider />
+          <App />
+        </ThemeProvider>
+      </CacheProvider>
     </Provider>
   </React.StrictMode>,
 );
