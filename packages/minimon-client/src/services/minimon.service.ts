@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { IReloadEvent, ISettingsEvent, IStatsEvent, SystemStats } from '@ahmic/minimon-core';
+import { ISettingsEvent, IStatsEvent, SystemStats } from '@ahmic/minimon-core';
 import { minimonStream } from './minimon.stream';
 
 export const baseUrl = '/api';
