@@ -8,9 +8,10 @@ import { SchedulerRegistry } from '@nestjs/schedule';
 import { StatsController } from './stats.controller';
 import { networkInterfaceProvider } from './network-interface.provider';
 import { platform } from 'os';
+import { EventsModule } from '../events/events.module';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, EventsModule],
   controllers: [StatsController],
   providers: [networkInterfaceProvider, StatsService],
   exports: [DEFAULT_NETWORK_INTERFACE],

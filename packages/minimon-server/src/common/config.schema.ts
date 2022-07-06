@@ -8,6 +8,6 @@ export interface PiMonConfig {
 
 export const piMonConfigSchema = Joi.object<PiMonConfig, true>({
   HOST: Joi.string().default('localhost'),
-  PORT: Joi.number().default(8080),
+  PORT: Joi.number().default(8081),
   POLLING_INTERVAL: Joi.number().default(1000),
 });

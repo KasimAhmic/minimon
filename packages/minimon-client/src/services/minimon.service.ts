@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { SystemStats } from '@ahmic/minimon-core';
+import { IReloadEvent, ISettingsEvent, IStatsEvent, SystemStats } from '@ahmic/minimon-core';
+import { minimonStream } from './minimon.stream';
 
 export const baseUrl = '/api';
 
@@ -18,33 +19,27 @@ const minimonService = createApi({
         url: '/stats',
       }),
       onCacheEntryAdded: async (_, { updateCachedData, cacheEntryRemoved }) => {
-        let eventsource: EventSource | undefined;
-
-        const connect = () => {
-          eventsource = new EventSource(`${baseUrl}/stats/stream`);
-
-          eventsource.onmessage = ({ data }) => {
-            updateCachedData(() => JSON.parse(data));
-          };
-
-          eventsource.onerror = () => {
-            try {
-              eventsource?.close();
-            } catch {}
-
-            eventsource = undefined;
-
-            setTimeout(() => connect(), 2000);
-          };
-        };
-
-        connect();
+        const id = minimonStream.subscribe<IStatsEvent>('stats', (stats) => {
+          updateCachedData(() => stats);
+        });
 
         await cacheEntryRemoved;
 
-        try {
-          eventsource?.close();
-        } catch {}
+        minimonStream.unsubscribe('stats', id);
+      },
+    }),
+    settings: build.query<any, void>({
+      query: () => ({
+        url: '/settings',
+      }),
+      onCacheEntryAdded: async (_, { updateCachedData, cacheEntryRemoved }) => {
+        const settingsSubscription = minimonStream.subscribe<ISettingsEvent>('settings', (settings) => {
+          updateCachedData(() => settings);
+        });
+
+        await cacheEntryRemoved;
+
+        minimonStream.unsubscribe('stats', settingsSubscription);
       },
     }),
   }),

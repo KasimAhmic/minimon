@@ -1,4 +1,5 @@
 export * from './cpu.stats';
+export * from './event';
 export * from './gpu.stats';
 export * from './metadata';
 export * from './network.stats';

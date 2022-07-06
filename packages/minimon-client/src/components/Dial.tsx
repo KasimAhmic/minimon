@@ -30,7 +30,7 @@ const useStyles = makeStyles()((theme) => ({
     position: 'absolute',
   },
   progressBackground: {
-    color: 'rgba(0, 0, 0, 0.12)',
+    color: 'rgba(255, 255, 255, 0.12)',
   },
   value: {
     transform: 'rotateZ(135deg)',

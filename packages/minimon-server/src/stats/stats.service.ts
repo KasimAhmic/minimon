@@ -1,41 +1,31 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { timed, toMillis } from '../common/time.util';
 import * as si from 'systeminformation';
-import {
-  CpuStats,
-  GpuStats,
-  NetworkStats,
-  RamStats,
-  SystemStats,
-  defaultSystemStats,
-} from '@ahmic/minimon-core';
+import { CpuStats, GpuStats, NetworkStats, RamStats, SystemStats } from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './stats.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
 import { Metadata } from '@ahmic/minimon-core/metadata';
-
-export interface SystemStatsMessage {
-  data: SystemStats;
-}
+import { EventsService } from 'src/events/events.service';
+import { StatsEvent } from './stats.event';
 
 @Injectable()
 export class StatsService {
-  private readonly stats: BehaviorSubject<SystemStatsMessage>;
-  private readonly defaultNetworkInterfaceName: string;
-  private readonly defaultNetworkInterfaceSpeed: number;
+  private stats: SystemStats;
 
-  constructor(@Inject(DEFAULT_NETWORK_INTERFACE) defaultNetworkInterface: DefaultNetworkInterface) {
-    this.stats = new BehaviorSubject<SystemStatsMessage>({ data: defaultSystemStats });
-    this.defaultNetworkInterfaceName = defaultNetworkInterface.name;
-    this.defaultNetworkInterfaceSpeed = defaultNetworkInterface.speed;
-  }
+  constructor(
+    @Inject(DEFAULT_NETWORK_INTERFACE)
+    private readonly defaultNetworkInterface: DefaultNetworkInterface,
+    private readonly eventsService: EventsService,
+  ) {}
 
   getStats(): SystemStats {
-    return this.stats.getValue().data;
+    return this.stats;
   }
 
-  subscribe(): Observable<SystemStatsMessage> {
-    return this.stats.asObservable();
+  private setStats(stats: SystemStats): void {
+    this.stats = stats;
+
+    this.eventsService.emitEvent(new StatsEvent(stats));
   }
 
   async updateStats(): Promise<void> {
@@ -55,7 +45,7 @@ export class StatsService {
       ),
     };
 
-    this.stats.next({ data: { cpu, ram, gpu, network, metadata } });
+    this.setStats({ cpu, ram, gpu, network, metadata });
   }
 
   private async getCpuStats(): Promise<CpuStats> {
@@ -113,11 +103,13 @@ export class StatsService {
   }
 
   private async getNetworkStats(): Promise<NetworkStats> {
-    const network = (await si.networkStats(this.defaultNetworkInterfaceName))[0];
+    const { name, speed } = this.defaultNetworkInterface;
+
+    const network = (await si.networkStats(name))[0];
 
     const upload = network.tx_sec;
     const download = network.rx_sec;
-    const usage = (upload + download) / this.defaultNetworkInterfaceSpeed;
+    const usage = (upload + download) / speed;
 
     return { upload, download, usage };
   }

@@ -1,3 +1,10 @@
+import { IMinimonEvent, IReloadEvent } from '@ahmic/minimon-core';
+
+export interface EventSubscription {
+  id: symbol;
+  callback: (data: unknown) => void;
+}
+
 export class MinimonStream {
   private retries: number;
   private connected: boolean;
@@ -5,13 +12,13 @@ export class MinimonStream {
   private eventSource: EventSource | undefined;
 
   private readonly maxRetries: number;
-  // private readonly subscriptions: Record<string, EventSubscription[]>;
+  private readonly subscriptions: Record<string, EventSubscription[]>;
 
   constructor() {
     this.retries = 0;
     this.connected = false;
     this.maxRetries = 5;
-    // this.subscriptions = {};
+    this.subscriptions = {};
   }
 
   isConnected(): boolean {
@@ -47,11 +54,23 @@ export class MinimonStream {
     }
   }
 
-  subscribe(): symbol {
-    return Symbol();
+  subscribe<T extends IMinimonEvent>(event: T['type'], callback: (data: T['data']) => void): symbol {
+    if (!(event in this.subscriptions)) {
+      this.subscriptions[event] = [];
+    }
+
+    const id = Symbol();
+
+    this.subscriptions[event].push({ id, callback });
+
+    return id;
   }
 
-  unsubscribe(): void {}
+  unsubscribe(event: string, subscriptionId: symbol): void {
+    this.subscriptions[event] = this.subscriptions[event].filter(
+      (subscription) => subscription.id !== subscriptionId,
+    );
+  }
 
   private handleOpen(): void {
     this.connected = true;
@@ -73,5 +92,27 @@ export class MinimonStream {
     }, 2000);
   }
 
-  private handleMessage(msg: MessageEvent): void {}
+  private handleMessage(msg: MessageEvent): void {
+    const message: IMinimonEvent = JSON.parse(msg.data);
+
+    const { type, data } = message;
+
+    if (!(type in this.subscriptions)) return;
+
+    for (const subscription of this.subscriptions[type]) {
+      try {
+        subscription.callback(data);
+      } catch (e) {
+        console.warn('An error occurred during message handling');
+        console.error(e);
+      }
+    }
+  }
 }
+
+const minimonStream = new MinimonStream();
+
+// One time subscriptions that never need to be worked with directly
+minimonStream.subscribe<IReloadEvent>('reload', () => window.location.reload());
+
+export { minimonStream };

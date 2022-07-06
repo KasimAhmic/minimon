@@ -1,3 +1,3 @@
-# MiniMon
+# Minimon
 
 System monitoring application.

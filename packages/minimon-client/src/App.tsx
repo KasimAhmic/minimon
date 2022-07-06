@@ -3,7 +3,6 @@ import { Dial } from './components/Dial';
 import { makeStyles } from 'tss-react/mui';
 import { Debug } from 'components/Debug';
 import { useDebug } from 'hooks/useDebug';
-import { Bar } from 'components/Bar';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -33,7 +32,7 @@ function App() {
 
       <div className={classes.break} />
 
-      <Bar label='LAN' value={(stats) => stats.network.usage} />
+      <Dial label='LAN' value={(stats) => stats.network.usage} />
 
       <Debug />
     </div>

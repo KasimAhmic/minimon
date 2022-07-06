@@ -4,7 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 
-const logger = new Logger('PiMon');
+const logger = new Logger('Minimon');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -16,6 +16,8 @@ async function bootstrap() {
 
   const host = configService.get('HOST');
   const port = configService.get('PORT');
+
+  process.on('warning', (e) => logger.warn(e.stack));
 
   try {
     const server = await app.listen(port, host);
