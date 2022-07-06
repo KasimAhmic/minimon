@@ -93,9 +93,21 @@ export class MinimonStream {
   }
 
   private handleMessage(msg: MessageEvent): void {
-    const message: IMinimonEvent = JSON.parse(msg.data);
+    let type: string;
+    let data: unknown;
 
-    const { type, data } = message;
+    try {
+      const message: IMinimonEvent = JSON.parse(msg.data);
+
+      type = message.type;
+      data = message.data;
+    } catch (e) {
+      console.warn('An error occurred during message deserialization');
+      console.warn(msg.data);
+      console.error(e);
+
+      return;
+    }
 
     if (!(type in this.subscriptions)) return;
 

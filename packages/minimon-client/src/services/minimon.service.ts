@@ -28,6 +28,7 @@ const minimonService = createApi({
         minimonStream.unsubscribe('stats', id);
       },
     }),
+
     settings: build.query<any, void>({
       query: () => ({
         url: '/settings',
