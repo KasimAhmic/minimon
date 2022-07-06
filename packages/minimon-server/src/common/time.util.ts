@@ -10,4 +10,4 @@ export const timed = async <T = unknown>(timedFunction: () => Promise<T>): Promi
   return [result, Number(end - start) / 1e6];
 };
 
-export const toMillis = (milliseconds: number): string => milliseconds.toFixed() + ' ms';
+export const toMillis = (milliseconds: number): string => milliseconds.toFixed(3) + ' ms';
