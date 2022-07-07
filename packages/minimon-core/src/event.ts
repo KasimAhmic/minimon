@@ -2,7 +2,7 @@ import { SystemStats } from './system.stats';
 
 export interface IMinimonEvent<T extends string = string, D = unknown> {
   type: T;
-  create: number;
+  created: number;
   data: D;
 }
 
