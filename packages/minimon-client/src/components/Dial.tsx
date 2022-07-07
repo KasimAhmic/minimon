@@ -30,14 +30,16 @@ const useStyles = makeStyles()((theme) => ({
     position: 'absolute',
   },
   progressBackground: {
-    color: 'rgba(255, 255, 255, 0.12)',
+    color: theme.palette.divider,
   },
   value: {
     transform: 'rotateZ(135deg)',
+    fontSize: 24,
   },
   label: {
     position: 'absolute',
-    bottom: theme.spacing(1),
+    bottom: theme.spacing(2),
+    fontSize: 32,
   },
 }));
 

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { ISettingsEvent, IStatsEvent, SystemStats } from '@ahmic/minimon-core';
+import { ISettingsEvent, IStatsEvent, Settings, SystemStats } from '@ahmic/minimon-core';
 import { minimonStream } from './minimon.stream';
 
 export const baseUrl = '/api';
@@ -29,7 +29,7 @@ const minimonService = createApi({
       },
     }),
 
-    settings: build.query<any, void>({
+    settings: build.query<SettingsResponse, SettingsArgs>({
       query: () => ({
         url: '/settings',
       }),
@@ -48,9 +48,12 @@ const minimonService = createApi({
 
 export type StatsResponse = SystemStats;
 export type StatsArgs = void;
+export type SettingsResponse = Settings;
+export type SettingsArgs = void;
 
 export const {
   useStatsQuery,
+  useSettingsQuery,
   reducerPath: minimonServiceReducerPath,
   reducer: minimonServiceReducer,
   endpoints: minimonServiceEndpoints,

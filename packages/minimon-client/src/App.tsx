@@ -1,42 +1,27 @@
-import React from 'react';
-import { Dial } from './components/Dial';
-import { makeStyles } from 'tss-react/mui';
-import { Debug } from 'components/Debug';
-import { useDebug } from 'hooks/useDebug';
+import React, { FC } from 'react';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { lightTheme, darkTheme } from 'theme';
+import { Main } from 'components/Main';
+import { useSettingsSelector } from 'hooks';
 
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    width: '100%',
-    padding: theme.spacing(2),
-    boxSizing: 'border-box',
-  },
-  break: {
-    flexBasis: '100%',
-    height: 0,
-  },
-}));
+export const muiCache = createCache({
+  key: 'mui',
+  prepend: true,
+});
 
-function App() {
-  const { classes } = useStyles();
+export const App: FC = () => {
+  const themeMode = useSettingsSelector((settings) => settings.themeMode);
 
-  useDebug();
+  const theme = themeMode === 'light' ? lightTheme : darkTheme;
 
   return (
-    <div className={classes.root}>
-      <Dial label='CPU' value={(stats) => stats.cpu.currentLoad} />
-      <Dial label='RAM' value={(stats) => stats.ram.usedMemory} />
-      <Dial label='GPU' value={(stats) => stats.gpu.utilizationGpu} />
-
-      <div className={classes.break} />
-
-      <Dial label='LAN' value={(stats) => stats.network.usage} />
-
-      <Debug />
-    </div>
+    <CacheProvider value={muiCache}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Main />
+      </ThemeProvider>
+    </CacheProvider>
   );
-}
-
-export default App;
+};
