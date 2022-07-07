@@ -1,11 +1,11 @@
 import { MinimonEvent } from '../events/minimon.event';
-import { ISettingsEvent } from '@ahmic/minimon-core';
+import { ISettingsEvent, Settings } from '@ahmic/minimon-core';
 
 export class SettingsEvent extends MinimonEvent<ISettingsEvent> {
-  readonly data: boolean;
+  readonly data: Settings;
 
-  constructor() {
+  constructor(settings: Settings) {
     super('settings');
-    this.data = true;
+    this.data = settings;
   }
 }

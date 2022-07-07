@@ -9,6 +9,8 @@ import { piMonConfigSchema } from './common/config.schema';
 import * as si from 'systeminformation';
 import { StatsModule } from './stats/stats.module';
 import { platform } from 'os';
+import { SettingsModule } from './settings/settings.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -20,7 +22,9 @@ import { platform } from 'os';
       rootPath: join(__dirname, '..', '..', 'client', 'dist'),
     }),
     ScheduleModule.forRoot(),
+    EventsModule,
     StatsModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
