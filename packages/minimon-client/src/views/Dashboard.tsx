@@ -19,7 +19,7 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export const Main: FC = () => {
+export const Dashboard: FC = () => {
   const { classes } = useStyles();
   const rootRef = useRef<HTMLDivElement>(null);
 
