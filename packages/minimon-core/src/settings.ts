@@ -1,4 +1,7 @@
-export type ThemeMode = 'light' | 'dark';
+export enum ThemeMode {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
 
 export interface Settings {
   clickToReload: boolean;
@@ -9,5 +12,5 @@ export interface Settings {
 export const defaultSettings: Settings = {
   clickToReload: true,
   showDebugScreen: true,
-  themeMode: 'dark',
+  themeMode: ThemeMode.DARK,
 };

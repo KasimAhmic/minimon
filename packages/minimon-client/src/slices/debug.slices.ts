@@ -29,7 +29,7 @@ export const debug = createSlice({
     },
 
     message: (state: Draft<DebugState>, action: PayloadAction<IStatsEvent>) => {
-      state.lastMessage = action.payload.data.metadata.timestamp;
+      state.lastMessage = new Date(action.payload.created).toLocaleString();
     },
 
     event: (state: Draft<DebugState>, action: PayloadAction<any>) => {

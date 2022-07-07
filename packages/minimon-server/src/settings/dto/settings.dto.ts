@@ -1,5 +1,5 @@
 import { Settings, ThemeMode } from '@ahmic/minimon-core';
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsEnum } from 'class-validator';
 
 export class SettingsDto implements Settings {
   @IsBoolean()
@@ -8,6 +8,6 @@ export class SettingsDto implements Settings {
   @IsBoolean()
   showDebugScreen: boolean;
 
-  @IsString()
+  @IsEnum(ThemeMode)
   themeMode: ThemeMode;
 }
