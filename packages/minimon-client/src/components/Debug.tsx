@@ -13,6 +13,7 @@ const useStyles = makeStyles()((theme) => ({
     bottom: 0,
     display: 'flex',
     gap: theme.spacing(1),
+    flexWrap: 'wrap',
     padding: 0,
     fontFamily: 'Monospace',
     fontSize: 14,
@@ -27,6 +28,10 @@ const useStyles = makeStyles()((theme) => ({
     margin: 0,
     background: 'rgba(0, 0, 0, 0.5)',
     lineHeight: 0.85,
+  },
+  break: {
+    flexBasis: '100%',
+    height: 0,
   },
 }));
 
