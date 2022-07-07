@@ -5,11 +5,20 @@ export interface EventSubscription {
   callback: (data: unknown) => void;
 }
 
+export interface MinimonEventHandlers {
+  onConnect: () => void;
+  onError: () => void;
+  onMessage: (msg: MessageEvent) => void;
+}
+
+const noop = () => {};
+
 export class MinimonStream {
   private retries: number;
   private connected: boolean;
   private streamUrl: string | undefined;
   private eventSource: EventSource | undefined;
+  private eventHandlers: MinimonEventHandlers;
 
   private readonly maxRetries: number;
   private readonly subscriptions: Record<string, EventSubscription[]>;
@@ -19,13 +28,18 @@ export class MinimonStream {
     this.connected = false;
     this.maxRetries = 5;
     this.subscriptions = {};
+    this.eventHandlers = { onConnect: noop, onError: noop, onMessage: noop };
   }
 
   isConnected(): boolean {
     return this.connected;
   }
 
-  connect(url: string): void {
+  connect(url: string, handlers?: Partial<MinimonEventHandlers>): void {
+    if (handlers) {
+      this.eventHandlers = { ...this.eventHandlers, ...handlers };
+    }
+
     const eventSource = new EventSource(url);
 
     eventSource.onopen = () => this.handleOpen();
@@ -41,13 +55,13 @@ export class MinimonStream {
   }
 
   reconnect(): void {
-    if (this.retries < this.maxRetries) {
+    if (this.retries < this.maxRetries && this.retries >= 0) {
       try {
         this.disconnect();
       } catch {}
 
       if (this.streamUrl) {
-        this.connect(this.streamUrl);
+        this.connect(this.streamUrl, this.eventHandlers);
       }
     } else {
       console.error('Max retries exceeded. Unable to connect to event stream.');
@@ -75,6 +89,8 @@ export class MinimonStream {
   private handleOpen(): void {
     this.connected = true;
     this.retries = 0;
+
+    this.eventHandlers.onConnect();
   }
 
   private handleError(): void {
@@ -90,20 +106,22 @@ export class MinimonStream {
       this.retries++;
       this.reconnect();
     }, 2000);
+
+    this.eventHandlers.onError();
   }
 
-  private handleMessage(msg: MessageEvent): void {
+  private handleMessage(event: MessageEvent): void {
     let type: string;
     let data: unknown;
 
     try {
-      const message: IMinimonEvent = JSON.parse(msg.data);
+      const message: IMinimonEvent = JSON.parse(event.data);
 
       type = message.type;
       data = message.data;
     } catch (e) {
       console.warn('An error occurred during message deserialization');
-      console.warn(msg.data);
+      console.warn(event.data);
       console.error(e);
 
       return;
@@ -114,6 +132,8 @@ export class MinimonStream {
     for (const subscription of this.subscriptions[type]) {
       try {
         subscription.callback(data);
+
+        this.eventHandlers.onMessage?.(event);
       } catch (e) {
         console.warn('An error occurred during message handling');
         console.error(e);
