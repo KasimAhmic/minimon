@@ -14,4 +14,20 @@ export class SettingsService {
   getSettings(): Settings {
     return this.settings;
   }
+
+  private setSettings(settings: Partial<Settings>): Settings {
+    this.settings = { ...this.settings, ...settings };
+
+    this.eventsService.emitEvent(new SettingsEvent(this.settings));
+
+    return this.settings;
+  }
+
+  updateSettings(settings: Partial<Settings>): Settings {
+    return this.setSettings(settings);
+  }
+
+  resetSettings(): Settings {
+    return this.setSettings(defaultSettings);
+  }
 }
