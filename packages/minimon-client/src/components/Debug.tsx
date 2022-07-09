@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import { useStatsSelector } from 'hooks/useStatsSelector';
 import { makeStyles } from 'tss-react/mui';
-import { useSettingsSelector } from 'hooks';
+import { useStatsSelector, useSettingsSelector } from 'hooks';
 import { useAppSelector } from 'app/hooks';
-import { selectDebugLog, selectLastEvent, selectLastMessage } from 'slices/debug.slices';
+import { selectDebugLog, selectLastEvent, selectLastMessage } from 'slices';
 
 const useStyles = makeStyles()((theme) => ({
   root: {

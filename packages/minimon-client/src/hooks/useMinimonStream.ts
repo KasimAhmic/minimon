@@ -3,7 +3,7 @@ import { useAppDispatch } from 'app/hooks';
 import { useCallback, useEffect } from 'react';
 import { baseUrl } from 'services/minimon.service';
 import { minimonStream } from 'services/minimon.stream';
-import { event, message, log } from 'slices/debug.slices';
+import { event, message, log } from 'slices';
 
 export const useMinimonStream = () => {
   const dispatch = useAppDispatch();

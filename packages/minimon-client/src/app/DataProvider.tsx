@@ -1,10 +1,10 @@
-import { useMinimonStream } from 'hooks/useMinimonStream';
+import { useMinimonStream } from 'hooks';
 import { FC } from 'react';
-import { useStatsQuery, useSettingsQuery } from '../services/minimon.service';
+import { useStatsQuery, useGetSettingsQuery } from '../services/minimon.service';
 
 export const DataProvider: FC = () => {
   useStatsQuery();
-  useSettingsQuery();
+  useGetSettingsQuery();
   useMinimonStream();
 
   return null;

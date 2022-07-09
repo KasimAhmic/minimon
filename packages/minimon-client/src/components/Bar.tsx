@@ -1,6 +1,6 @@
-import { LinearProgress, Typography } from '@mui/material';
-import { SystemStatsSelector, useStatPercentage } from 'hooks/useStatPercentage';
 import React, { FC } from 'react';
+import { LinearProgress, Typography } from '@mui/material';
+import { SystemStatsSelector, useStatPercentage } from 'hooks';
 import { makeStyles } from 'tss-react/mui';
 
 const size = 30;
