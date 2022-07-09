@@ -27,7 +27,7 @@ General purpose package used for storing shared types and constants between the 
 
 ### Minimon Server
 
-Backend system powered by Nest.js and the fantastic [systeminformation](https://github.com/sebhildebrandt/systeminformation) package that monitors your system vitals and exposes them via a REST API.
+Backend system powered by [Nest.js](https://github.com/nestjs/nest) and the fantastic [systeminformation](https://github.com/sebhildebrandt/systeminformation) package that monitors your system vitals and exposes them via a REST API.
 
 ### Minimon Client
 
