@@ -44,10 +44,10 @@ export const defaultSystemStats: SystemVitals = {
   },
   metadata: {
     timestamp: '0ms',
-    cpuStatsProcessingTime: '0ms',
-    ramStatsProcessingTime: '0ms',
-    gpuStatsProcessingTime: '0ms',
-    networkStatsProcessingTime: '0ms',
+    cpuVitalsProcessingTime: '0ms',
+    ramVitalsProcessingTime: '0ms',
+    gpuVitalsProcessingTime: '0ms',
+    networkVitalsProcessingTime: '0ms',
     totalProcessingTime: '0ms',
   },
 };
