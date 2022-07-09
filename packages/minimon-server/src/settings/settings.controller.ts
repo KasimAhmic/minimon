@@ -21,4 +21,9 @@ export class SettingsController {
   resetSettings(): Settings {
     return this.settingsService.resetSettings();
   }
+
+  @Put('reload')
+  reloadClients(): void {
+    this.settingsService.reloadClients();
+  }
 }

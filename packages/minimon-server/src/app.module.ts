@@ -5,23 +5,29 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { piMonConfigSchema } from './common/config.schema';
+import { MinimonConfigSchema } from './common/config.schema';
 import * as si from 'systeminformation';
 import { StatsModule } from './stats/stats.module';
 import { platform } from 'os';
 import { SettingsModule } from './settings/settings.module';
 import { EventsModule } from './events/events.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       cache: true,
-      validationSchema: piMonConfigSchema,
+      validationSchema: MinimonConfigSchema,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'client', 'dist'),
     }),
     ScheduleModule.forRoot(),
+    EventEmitterModule.forRoot({
+      global: true,
+      verboseMemoryLeak: true,
+      delimiter: '.',
+    }),
     EventsModule,
     StatsModule,
     SettingsModule,

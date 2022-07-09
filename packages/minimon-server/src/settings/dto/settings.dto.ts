@@ -1,5 +1,5 @@
 import { Settings, ThemeMode } from '@ahmic/minimon-core';
-import { IsBoolean, IsEnum } from 'class-validator';
+import { IsBoolean, IsEnum, IsInt, IsPositive } from 'class-validator';
 
 export class SettingsDto implements Settings {
   @IsBoolean()
@@ -10,4 +10,8 @@ export class SettingsDto implements Settings {
 
   @IsEnum(ThemeMode)
   themeMode: ThemeMode;
+
+  @IsInt()
+  @IsPositive()
+  pollingInterval: number;
 }

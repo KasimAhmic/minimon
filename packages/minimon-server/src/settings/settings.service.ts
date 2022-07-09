@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { Settings, defaultSettings } from '@ahmic/minimon-core';
 import { EventsService } from 'src/events/events.service';
 import { SettingsEvent } from './settings.event';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { INTERVAL_UPDATED } from './settings.constants';
+import { ReloadEvent } from './reload.event';
 
 @Injectable()
 export class SettingsService {
   private settings: Settings;
 
-  constructor(private readonly eventsService: EventsService) {
+  constructor(private readonly eventsService: EventsService, private readonly eventEmitter: EventEmitter2) {
     this.settings = defaultSettings;
   }
 
@@ -24,10 +27,18 @@ export class SettingsService {
   }
 
   updateSettings(settings: Partial<Settings>): Settings {
+    if (settings?.pollingInterval && this.settings.pollingInterval !== settings.pollingInterval) {
+      this.eventEmitter.emit(INTERVAL_UPDATED, settings.pollingInterval);
+    }
+
     return this.setSettings(settings);
   }
 
   resetSettings(): Settings {
     return this.setSettings(defaultSettings);
+  }
+
+  reloadClients(): void {
+    this.eventsService.emitEvent(new ReloadEvent());
   }
 }

@@ -7,16 +7,35 @@ import { DefaultNetworkInterface } from './network-interface.provider';
 import { Metadata } from '@ahmic/minimon-core/metadata';
 import { EventsService } from 'src/events/events.service';
 import { StatsEvent } from './stats.event';
+import { SchedulerRegistry } from '@nestjs/schedule';
+import { OnEvent } from '@nestjs/event-emitter';
+import { INTERVAL_UPDATED } from 'src/settings/settings.constants';
 
 @Injectable()
 export class StatsService {
+  private readonly INTERVAL_NAME = StatsService.name + 'Interval';
+
   private stats: SystemStats;
 
   constructor(
     @Inject(DEFAULT_NETWORK_INTERFACE)
     private readonly defaultNetworkInterface: DefaultNetworkInterface,
     private readonly eventsService: EventsService,
+    private readonly schedulerRegistry: SchedulerRegistry,
   ) {}
+
+  async startPoller(interval: number) {
+    const job = setInterval(() => this.updateStats(), interval);
+
+    this.schedulerRegistry.addInterval(this.INTERVAL_NAME, job);
+  }
+
+  @OnEvent(INTERVAL_UPDATED)
+  private handleIntervalUpdated(interval: number) {
+    this.schedulerRegistry.deleteInterval(this.INTERVAL_NAME);
+
+    this.startPoller(interval);
+  }
 
   getStats(): SystemStats {
     return this.stats;

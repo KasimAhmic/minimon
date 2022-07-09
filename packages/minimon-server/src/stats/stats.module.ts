@@ -1,10 +1,8 @@
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PiMonConfig } from 'src/common/config.schema';
+import { ConfigModule } from '@nestjs/config';
 import { DEFAULT_NETWORK_INTERFACE } from './stats.constants';
 import { StatsService } from './stats.service';
 import * as si from 'systeminformation';
-import { SchedulerRegistry } from '@nestjs/schedule';
 import { StatsController } from './stats.controller';
 import { networkInterfaceProvider } from './network-interface.provider';
 import { platform } from 'os';
@@ -19,11 +17,7 @@ import { EventsModule } from '../events/events.module';
 export class StatsModule implements OnModuleInit {
   private readonly logger = new Logger(StatsModule.name);
 
-  constructor(
-    private readonly configService: ConfigService<PiMonConfig>,
-    private readonly statsService: StatsService,
-    private readonly schedulerRegistry: SchedulerRegistry,
-  ) {}
+  constructor(private readonly statsService: StatsService) {}
 
   async onModuleInit(): Promise<void> {
     if (platform() === 'win32') {
@@ -32,11 +26,6 @@ export class StatsModule implements OnModuleInit {
 
     await this.statsService.updateStats();
 
-    const job = setInterval(
-      () => this.statsService.updateStats(),
-      this.configService.get('POLLING_INTERVAL'),
-    );
-
-    this.schedulerRegistry.addInterval('Stats Job', job);
+    await this.statsService.startPoller(1000);
   }
 }
