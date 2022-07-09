@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CircularProgress, Typography } from '@mui/material';
-import { SystemStatsSelector, useStatPercentage } from 'hooks/useStatPercentage';
+import { SystemStatsSelector, useStatPercentage } from 'hooks';
 
 const size = 230;
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    transform: 'rotateZ(-135deg)',
+    transform: 'rotateZ(-125deg)',
   },
   progress: {
     position: 'absolute',
@@ -33,7 +33,7 @@ const useStyles = makeStyles()((theme) => ({
     color: theme.palette.divider,
   },
   value: {
-    transform: 'rotateZ(135deg)',
+    transform: 'rotateZ(125deg)',
     fontSize: 24,
   },
   label: {
@@ -48,19 +48,20 @@ export interface DialProps {
   value: number | SystemStatsSelector;
   min?: number | SystemStatsSelector;
   max?: number | SystemStatsSelector;
+  suffix?: string;
 }
 
-export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100 }) => {
+export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100, suffix }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max, true);
+  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max, true, suffix);
 
   return (
     <div className={classes.root}>
       <div className={classes.progressContainer}>
         <CircularProgress
           variant='determinate'
-          value={75}
+          value={70}
           size={size}
           thickness={10}
           className={classes.progress}
