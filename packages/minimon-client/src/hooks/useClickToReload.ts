@@ -1,16 +1,18 @@
 import { RefObject, useEffect } from 'react';
 import { useSettingsSelector } from './useSettingsSelector';
 
+const reload = () => window.location.reload();
+
 export const useClickToReload = (rootRef: RefObject<HTMLElement>): void => {
   const clickToReloadEnabled = useSettingsSelector((settings) => settings.clickToReload);
 
   useEffect(() => {
-    if (!rootRef.current || !clickToReloadEnabled) return;
+    if (!rootRef.current) return;
 
     const element = rootRef.current;
 
-    element.addEventListener('click', () => window.location.reload());
+    if (clickToReloadEnabled) element.addEventListener('click', reload);
 
-    return () => element.removeEventListener('click', () => window.location.reload());
+    return () => element.removeEventListener('click', reload);
   }, [rootRef, clickToReloadEnabled]);
 };
