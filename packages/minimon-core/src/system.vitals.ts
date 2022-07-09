@@ -12,7 +12,7 @@ export interface SystemVitals {
   metadata: Metadata;
 }
 
-export const defaultSystemStats: SystemVitals = {
+export const defaultSystemVitals: SystemVitals = {
   cpu: {
     currentLoad: 0,
     coreCount: 0,
