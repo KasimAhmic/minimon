@@ -22,6 +22,7 @@
     "@ahmic/minimon-core": "*",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@mui/lab": "^5.0.0-alpha.89",
     "@mui/material": "^5.8.6",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
