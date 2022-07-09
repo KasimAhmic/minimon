@@ -1,4 +1,4 @@
-export interface CpuStats {
+export interface CpuVitals {
   currentLoad: number;
   coreCount: number;
   currentSpeed: number;

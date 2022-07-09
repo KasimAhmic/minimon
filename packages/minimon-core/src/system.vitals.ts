@@ -1,18 +1,18 @@
-import { CpuStats } from './cpu.stats';
-import { GpuStats } from './gpu.stats';
+import { CpuVitals } from './cpu.vitals';
+import { GpuVitals } from './gpu.vitals';
 import { Metadata } from './metadata';
-import { NetworkStats } from './network.stats';
-import { RamStats } from './ram.stats';
+import { NetworkVitals } from './network.vitals';
+import { RamVitals } from './ram.vitals';
 
-export interface SystemStats {
-  cpu: CpuStats;
-  ram: RamStats;
-  gpu: GpuStats;
-  network: NetworkStats;
+export interface SystemVitals {
+  cpu: CpuVitals;
+  ram: RamVitals;
+  gpu: GpuVitals;
+  network: NetworkVitals;
   metadata: Metadata;
 }
 
-export const defaultSystemStats: SystemStats = {
+export const defaultSystemStats: SystemVitals = {
   cpu: {
     currentLoad: 0,
     coreCount: 0,

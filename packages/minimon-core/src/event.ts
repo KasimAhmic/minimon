@@ -1,4 +1,5 @@
-import { SystemStats } from './system.stats';
+import { Settings } from './settings';
+import { SystemVitals } from './system.vitals';
 
 export interface IMinimonEvent<T extends string = string, D = unknown> {
   type: T;
@@ -6,6 +7,6 @@ export interface IMinimonEvent<T extends string = string, D = unknown> {
   data: D;
 }
 
-export type IStatsEvent = IMinimonEvent<'stats', SystemStats>;
+export type IStatsEvent = IMinimonEvent<'stats', SystemVitals>;
 export type IReloadEvent = IMinimonEvent<'reload', boolean>;
-export type ISettingsEvent = IMinimonEvent<'settings', any>;
+export type ISettingsEvent = IMinimonEvent<'settings', Settings>;

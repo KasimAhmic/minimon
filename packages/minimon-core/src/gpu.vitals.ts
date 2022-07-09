@@ -1,4 +1,4 @@
-export interface GpuStats {
+export interface GpuVitals {
   fanSpeed: number;
   memoryTotal: number;
   memoryUsed: number;
