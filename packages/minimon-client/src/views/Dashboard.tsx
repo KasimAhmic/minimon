@@ -34,6 +34,7 @@ export const Dashboard: FC = () => {
       <div className={classes.break} />
 
       <Dial label='LAN' value={(stats) => stats.network.usage} />
+      <Dial label='GPU Temp' value={(stats) => stats.gpu.temperatureGpu} suffix='°C' />
 
       <Debug />
     </div>
