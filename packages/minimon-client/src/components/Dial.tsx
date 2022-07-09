@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CircularProgress, Typography } from '@mui/material';
-import { SystemStatsSelector, useStatPercentage } from 'hooks';
+import { SystemVitalsSelector, useVitalPercentage } from 'hooks';
 
 const size = 230;
 
@@ -45,16 +45,16 @@ const useStyles = makeStyles()((theme) => ({
 
 export interface DialProps {
   label: string;
-  value: number | SystemStatsSelector;
-  min?: number | SystemStatsSelector;
-  max?: number | SystemStatsSelector;
+  value: number | SystemVitalsSelector;
+  min?: number | SystemVitalsSelector;
+  max?: number | SystemVitalsSelector;
   suffix?: string;
 }
 
 export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100, suffix }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max, true, suffix);
+  const { normalizedValue, formattedValue } = useVitalPercentage(value, min, max, true, suffix);
 
   return (
     <div className={classes.root}>

@@ -1,8 +1,8 @@
-import { defaultSettings, Settings } from '@ahmic/minimon-core';
-import { minimonServiceEndpoints } from '../services/minimon.service';
+import { defaultSettings } from '@ahmic/minimon-core';
+import { GetSettingsResponse, minimonServiceEndpoints } from '../services/minimon.service';
 
-type SelectFromResult = (data: Settings) => any;
-type Result = { data?: Settings };
+type SelectFromResult = (data: GetSettingsResponse) => any;
+type Result = { data?: GetSettingsResponse };
 
 export const useSettingsSelector = <T extends SelectFromResult>(selector: T): ReturnType<T> => {
   const selectFromResult = ({ data }: Result) => ({ data: selector?.(data ?? defaultSettings) });
@@ -12,7 +12,7 @@ export const useSettingsSelector = <T extends SelectFromResult>(selector: T): Re
   return data;
 };
 
-export const useAreSettingsLoaded = () => {
+export const useAreSettingsLoaded = (): boolean => {
   const { isSuccess } = minimonServiceEndpoints.getSettings.useQueryState(undefined);
 
   return isSuccess;

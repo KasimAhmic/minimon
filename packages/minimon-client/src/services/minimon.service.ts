@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
-import { ISettingsEvent, IStatsEvent, Settings, SystemStats } from '@ahmic/minimon-core';
+import { ISettingsEvent, IVitalsEvent, Settings, SystemVitals } from '@ahmic/minimon-core';
 import { minimonStream } from './minimon.stream';
 
 export const baseUrl = '/api';
@@ -16,18 +16,18 @@ const minimonService = createApi({
   reducerPath: 'minimon',
   baseQuery,
   endpoints: (build) => ({
-    stats: build.query<StatsResponse, StatsArgs>({
+    getVitals: build.query<VitalsResponse, VitalsArgs>({
       query: () => ({
-        url: '/stats',
+        url: '/vitals',
       }),
       onCacheEntryAdded: async (_, { updateCachedData, cacheEntryRemoved }) => {
-        const id = minimonStream.subscribe<IStatsEvent>('stats', (stats) => {
-          updateCachedData(() => stats);
+        const id = minimonStream.subscribe<IVitalsEvent>('vitals', (vitals) => {
+          updateCachedData(() => vitals);
         });
 
         await cacheEntryRemoved;
 
-        minimonStream.unsubscribe('stats', id);
+        minimonStream.unsubscribe('vitals', id);
       },
     }),
 
@@ -42,7 +42,7 @@ const minimonService = createApi({
 
         await cacheEntryRemoved;
 
-        minimonStream.unsubscribe('stats', settingsSubscription);
+        minimonStream.unsubscribe('settings', settingsSubscription);
       },
     }),
 
@@ -73,8 +73,8 @@ const minimonService = createApi({
   }),
 });
 
-export type StatsResponse = SystemStats;
-export type StatsArgs = void;
+export type VitalsResponse = SystemVitals;
+export type VitalsArgs = void;
 export type GetSettingsResponse = Settings;
 export type GetSettingsArgs = void;
 export type UpdateSettingsResponse = Settings;
@@ -85,7 +85,7 @@ export type ReloadClientsResponse = void;
 export type ReloadClientsArgs = void;
 
 export const {
-  useStatsQuery,
+  useGetVitalsQuery,
   useGetSettingsQuery,
   useUpdateSettingsMutation,
   useResetSettingsMutation,

@@ -1,4 +1,4 @@
-import { IStatsEvent } from '@ahmic/minimon-core';
+import { IVitalsEvent } from '@ahmic/minimon-core';
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
 
@@ -28,7 +28,7 @@ export const debug = createSlice({
       return state;
     },
 
-    message: (state: Draft<DebugState>, action: PayloadAction<IStatsEvent>) => {
+    message: (state: Draft<DebugState>, action: PayloadAction<IVitalsEvent>) => {
       state.lastMessage = new Date(action.payload.created).toLocaleString();
     },
 

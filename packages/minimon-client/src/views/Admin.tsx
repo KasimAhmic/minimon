@@ -143,7 +143,7 @@ export const Admin: FC = () => {
                 </TableCell>
                 <TableCell>
                   The frequency at which the Minimon server polls for hardware updates. Note that you
-                  shouldn't set this value lower than it takes to retrieve all the stats. You can see the
+                  shouldn't set this value lower than it takes to retrieve all the vitals. You can see the
                   various timings by enabling the debug screen below.
                 </TableCell>
               </TableRow>

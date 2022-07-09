@@ -27,14 +27,14 @@ export const Dashboard: FC = () => {
 
   return (
     <div className={classes.root} ref={rootRef}>
-      <Dial label='CPU' value={(stats) => stats.cpu.currentLoad} />
-      <Dial label='RAM' value={(stats) => stats.ram.usedMemory} />
-      <Dial label='GPU' value={(stats) => stats.gpu.utilizationGpu} />
+      <Dial label='CPU' value={(vitals) => vitals.cpu.currentLoad} />
+      <Dial label='RAM' value={(vitals) => vitals.ram.usedMemory} />
+      <Dial label='GPU' value={(vitals) => vitals.gpu.utilizationGpu} />
 
       <div className={classes.break} />
 
-      <Dial label='LAN' value={(stats) => stats.network.usage} />
-      <Dial label='GPU Temp' value={(stats) => stats.gpu.temperatureGpu} suffix='°C' />
+      <Dial label='LAN' value={(vitals) => vitals.network.usage} />
+      <Dial label='GPU Temp' value={(vitals) => vitals.gpu.temperatureGpu} suffix='°C' />
 
       <Debug />
     </div>

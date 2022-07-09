@@ -1,4 +1,4 @@
-import { IStatsEvent } from '@ahmic/minimon-core';
+import { IVitalsEvent } from '@ahmic/minimon-core';
 import { useAppDispatch } from 'app/hooks';
 import { useCallback, useEffect } from 'react';
 import { baseUrl } from 'services/minimon.service';
@@ -14,7 +14,7 @@ export const useMinimonStream = () => {
 
   const onMessage = useCallback(
     (e: MessageEvent) => {
-      const data: IStatsEvent = JSON.parse(e.data);
+      const data: IVitalsEvent = JSON.parse(e.data);
 
       dispatch(message(data));
       dispatch(log(`${data.created} ${data.type}`));

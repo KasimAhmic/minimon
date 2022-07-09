@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { LinearProgress, Typography } from '@mui/material';
-import { SystemStatsSelector, useStatPercentage } from 'hooks';
+import { SystemVitalsSelector, useVitalPercentage } from 'hooks';
 import { makeStyles } from 'tss-react/mui';
 
 const size = 30;
@@ -32,15 +32,15 @@ const useStyles = makeStyles()((theme) => ({
 
 export interface BarProps {
   label: string;
-  value: number | SystemStatsSelector;
-  min?: number | SystemStatsSelector;
-  max?: number | SystemStatsSelector;
+  value: number | SystemVitalsSelector;
+  min?: number | SystemVitalsSelector;
+  max?: number | SystemVitalsSelector;
 }
 
 export const Bar: FC<BarProps> = ({ label, value, min = 0, max = 100 }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useStatPercentage(value, min, max);
+  const { normalizedValue, formattedValue } = useVitalPercentage(value, min, max);
 
   return (
     <div className={classes.root}>

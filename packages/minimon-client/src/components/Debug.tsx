@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { useStatsSelector, useSettingsSelector } from 'hooks';
+import { useVitalsSelector, useSettingsSelector } from 'hooks';
 import { useAppSelector } from 'app/hooks';
 import { selectDebugLog, selectLastEvent, selectLastMessage } from 'slices';
 
@@ -37,7 +37,7 @@ const useStyles = makeStyles()((theme) => ({
 export const Debug: FC = () => {
   const { classes } = useStyles();
 
-  const meta = useStatsSelector((stats) => stats.metadata);
+  const meta = useVitalsSelector((vitals) => vitals.metadata);
   const showDebugScreen = useSettingsSelector((settings) => settings.showDebugScreen);
   const logs = useAppSelector(selectDebugLog);
   const lastEvent = useAppSelector(selectLastEvent);
@@ -87,19 +87,19 @@ export const Debug: FC = () => {
         <tbody>
           <tr>
             <td>CPU</td>
-            <td>{meta.cpuStatsProcessingTime}</td>
+            <td>{meta.cpuVitalsProcessingTime}</td>
           </tr>
           <tr>
             <td>RAM</td>
-            <td>{meta.ramStatsProcessingTime}</td>
+            <td>{meta.ramVitalsProcessingTime}</td>
           </tr>
           <tr>
             <td>GPU</td>
-            <td>{meta.gpuStatsProcessingTime}</td>
+            <td>{meta.gpuVitalsProcessingTime}</td>
           </tr>
           <tr>
             <td>LAN</td>
-            <td>{meta.networkStatsProcessingTime}</td>
+            <td>{meta.networkVitalsProcessingTime}</td>
           </tr>
           <tr>
             <td>Total</td>
