@@ -10,6 +10,8 @@ const baseQuery = retry(
   }),
 );
 
+const noRetry = { extraOptions: { maxRetries: 0 } };
+
 const minimonService = createApi({
   reducerPath: 'minimon',
   baseQuery,
@@ -29,7 +31,7 @@ const minimonService = createApi({
       },
     }),
 
-    settings: build.query<SettingsResponse, SettingsArgs>({
+    getSettings: build.query<GetSettingsResponse, GetSettingsArgs>({
       query: () => ({
         url: '/settings',
       }),
@@ -43,17 +45,51 @@ const minimonService = createApi({
         minimonStream.unsubscribe('stats', settingsSubscription);
       },
     }),
+
+    updateSettings: build.mutation<UpdateSettingsResponse, UpdateSettingsArgs>({
+      query: (settings) => ({
+        url: '/settings',
+        method: 'PUT',
+        body: settings,
+      }),
+      ...noRetry,
+    }),
+
+    resetSettings: build.mutation<ResetSettingsResponse, ResetSettingsArgs>({
+      query: () => ({
+        url: '/settings/reset',
+        method: 'PUT',
+      }),
+      ...noRetry,
+    }),
+
+    reloadClients: build.mutation<ReloadClientsResponse, ReloadClientsArgs>({
+      query: () => ({
+        url: '/settings/reload',
+        method: 'PUT',
+      }),
+      ...noRetry,
+    }),
   }),
 });
 
 export type StatsResponse = SystemStats;
 export type StatsArgs = void;
-export type SettingsResponse = Settings;
-export type SettingsArgs = void;
+export type GetSettingsResponse = Settings;
+export type GetSettingsArgs = void;
+export type UpdateSettingsResponse = Settings;
+export type UpdateSettingsArgs = Partial<Settings>;
+export type ResetSettingsResponse = void;
+export type ResetSettingsArgs = void;
+export type ReloadClientsResponse = void;
+export type ReloadClientsArgs = void;
 
 export const {
   useStatsQuery,
-  useSettingsQuery,
+  useGetSettingsQuery,
+  useUpdateSettingsMutation,
+  useResetSettingsMutation,
+  useReloadClientsMutation,
   reducerPath: minimonServiceReducerPath,
   reducer: minimonServiceReducer,
   endpoints: minimonServiceEndpoints,
