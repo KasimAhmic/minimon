@@ -27,18 +27,24 @@ export class SettingsService {
   }
 
   updateSettings(settings: Partial<Settings>): Settings {
-    if (settings?.pollingInterval && this.settings.pollingInterval !== settings.pollingInterval) {
-      this.eventEmitter.emit(INTERVAL_UPDATED, settings.pollingInterval);
-    }
+    this.handlePollingIntervalUpdate(settings);
 
     return this.setSettings(settings);
   }
 
   resetSettings(): Settings {
+    this.handlePollingIntervalUpdate(defaultSettings);
+
     return this.setSettings(defaultSettings);
   }
 
   reloadClients(): void {
     this.eventsService.emitEvent(new ReloadEvent());
+  }
+
+  private handlePollingIntervalUpdate(settings: Partial<Settings>) {
+    if (settings?.pollingInterval && this.settings.pollingInterval !== settings.pollingInterval) {
+      this.eventEmitter.emit(INTERVAL_UPDATED, settings.pollingInterval);
+    }
   }
 }
