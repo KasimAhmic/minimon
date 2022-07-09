@@ -7,6 +7,6 @@ export interface IMinimonEvent<T extends string = string, D = unknown> {
   data: D;
 }
 
-export type IStatsEvent = IMinimonEvent<'stats', SystemVitals>;
+export type IVitalsEvent = IMinimonEvent<'vitals', SystemVitals>;
 export type IReloadEvent = IMinimonEvent<'reload', boolean>;
 export type ISettingsEvent = IMinimonEvent<'settings', Settings>;
