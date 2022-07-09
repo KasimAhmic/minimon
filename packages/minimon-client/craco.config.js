@@ -5,6 +5,7 @@ module.exports = {
     {
       plugin: CracoEsbuildPlugin,
       options: {
+        enableSvgr: true,
         esbuildLoaderOptions: {
           loader: 'tsx',
           target: 'es2020',
