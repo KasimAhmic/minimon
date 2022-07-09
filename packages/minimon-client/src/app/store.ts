@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { debugPath, debugReducer } from 'slices/debug.slices';
+import { uiPath, uiReducer, debugPath, debugReducer } from 'slices';
 import {
   minimonServiceMiddleware,
   minimonServiceReducer,
@@ -10,6 +10,7 @@ export const store = configureStore({
   reducer: {
     [minimonServiceReducerPath]: minimonServiceReducer,
     [debugPath]: debugReducer,
+    [uiPath]: uiReducer,
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), minimonServiceMiddleware],
 });
