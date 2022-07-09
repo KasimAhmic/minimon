@@ -1,12 +1,13 @@
 import { DEFAULT_NETWORK_INTERFACE } from './stats.constants';
 import * as si from 'systeminformation';
+import { Provider } from '@nestjs/common';
 
 export type DefaultNetworkInterface = {
   name: string;
   speed: number;
 };
 
-export const networkInterfaceProvider = {
+export const networkInterfaceProvider: Provider = {
   provide: DEFAULT_NETWORK_INTERFACE,
   useFactory: async (): Promise<DefaultNetworkInterface> => {
     const defaultInterfaceName = await si.networkInterfaceDefault();

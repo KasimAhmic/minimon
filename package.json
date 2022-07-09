@@ -38,7 +38,7 @@
     "reset:core": "yarn workspace @ahmic/minimon-core reset",
     "reset:server": "yarn workspace @ahmic/minimon-server reset",
     "reset:client": "yarn workspace @ahmic/minimon-client reset",
-    "reset": "concurrently \"yarn reset:core\" \"yarn reset:server\" \"yarn reset:client\" && rimraf ./node_modules && yarn run init",
+    "reset": "concurrently \"yarn reset:core\" \"yarn reset:server\" \"yarn reset:client\"  -n \" Core   , Server , Client \" -c \"yellow,green,cyan\" && rimraf ./node_modules && yarn run init",
     "pre-commit": "lint-staged",
     "commit-msg": "commitlint --edit"
   },
