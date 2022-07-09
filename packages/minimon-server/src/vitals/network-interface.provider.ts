@@ -1,4 +1,4 @@
-import { DEFAULT_NETWORK_INTERFACE } from './stats.constants';
+import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import * as si from 'systeminformation';
 import { Provider } from '@nestjs/common';
 

@@ -1,21 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { timed, toMillis } from '../common/time.util';
 import * as si from 'systeminformation';
-import { CpuStats, GpuStats, NetworkStats, RamStats, SystemStats } from '@ahmic/minimon-core';
-import { DEFAULT_NETWORK_INTERFACE } from './stats.constants';
+import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals } from '@ahmic/minimon-core';
+import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
 import { Metadata } from '@ahmic/minimon-core/metadata';
 import { EventsService } from 'src/events/events.service';
-import { StatsEvent } from './stats.event';
+import { VitalsEvent } from './vitals.event';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { OnEvent } from '@nestjs/event-emitter';
 import { INTERVAL_UPDATED } from 'src/settings/settings.constants';
 
 @Injectable()
-export class StatsService {
-  private readonly INTERVAL_NAME = StatsService.name + 'Interval';
+export class VitalsService {
+  private readonly INTERVAL_NAME = VitalsService.name + 'Interval';
 
-  private stats: SystemStats;
+  private vitals: SystemVitals;
 
   constructor(
     @Inject(DEFAULT_NETWORK_INTERFACE)
@@ -25,7 +25,7 @@ export class StatsService {
   ) {}
 
   async startPoller(interval: number) {
-    const job = setInterval(() => this.updateStats(), interval);
+    const job = setInterval(() => this.updateVitals(), interval);
 
     this.schedulerRegistry.addInterval(this.INTERVAL_NAME, job);
   }
@@ -37,37 +37,40 @@ export class StatsService {
     this.startPoller(interval);
   }
 
-  getStats(): SystemStats {
-    return this.stats;
+  getVitals(): SystemVitals {
+    return this.vitals;
   }
 
-  private setStats(stats: SystemStats): void {
-    this.stats = stats;
+  private setVitals(vitals: SystemVitals): void {
+    this.vitals = vitals;
 
-    this.eventsService.emitEvent(new StatsEvent(stats));
+    this.eventsService.emitEvent(new VitalsEvent(vitals));
   }
 
-  async updateStats(): Promise<void> {
-    const [cpu, cpuStatsProcessingTime] = await timed<CpuStats>(() => this.getCpuStats());
-    const [ram, ramStatsProcessingTime] = await timed<RamStats>(() => this.getRamStats());
-    const [gpu, gpuStatsProcessingTime] = await timed<GpuStats>(() => this.getGpuStats());
-    const [network, networkStatsProcessingTime] = await timed<NetworkStats>(() => this.getNetworkStats());
+  async updateVitals(): Promise<void> {
+    const [cpu, cpuVitalsProcessingTime] = await timed<CpuVitals>(() => this.getCpuVitals());
+    const [ram, ramVitalsProcessingTime] = await timed<RamVitals>(() => this.getRamVitals());
+    const [gpu, gpuVitalsProcessingTime] = await timed<GpuVitals>(() => this.getGpuVitals());
+    const [network, networkVitalsProcessingTime] = await timed<NetworkVitals>(() => this.getNetworkVitals());
 
     const metadata: Metadata = {
       timestamp: new Date().toISOString(),
-      cpuStatsProcessingTime: toMillis(cpuStatsProcessingTime),
-      ramStatsProcessingTime: toMillis(ramStatsProcessingTime),
-      gpuStatsProcessingTime: toMillis(gpuStatsProcessingTime),
-      networkStatsProcessingTime: toMillis(networkStatsProcessingTime),
+      cpuVitalsProcessingTime: toMillis(cpuVitalsProcessingTime),
+      ramVitalsProcessingTime: toMillis(ramVitalsProcessingTime),
+      gpuVitalsProcessingTime: toMillis(gpuVitalsProcessingTime),
+      networkVitalsProcessingTime: toMillis(networkVitalsProcessingTime),
       totalProcessingTime: toMillis(
-        cpuStatsProcessingTime + ramStatsProcessingTime + gpuStatsProcessingTime + networkStatsProcessingTime,
+        cpuVitalsProcessingTime +
+          ramVitalsProcessingTime +
+          gpuVitalsProcessingTime +
+          networkVitalsProcessingTime,
       ),
     };
 
-    this.setStats({ cpu, ram, gpu, network, metadata });
+    this.setVitals({ cpu, ram, gpu, network, metadata });
   }
 
-  private async getCpuStats(): Promise<CpuStats> {
+  private async getCpuVitals(): Promise<CpuVitals> {
     const load = await si.currentLoad();
     const speed = await si.cpuCurrentSpeed();
     const temp = await si.cpuTemperature();
@@ -81,7 +84,7 @@ export class StatsService {
     return { currentLoad, coreCount, currentSpeed, currentTemp, maxTemp };
   }
 
-  private async getRamStats(): Promise<RamStats> {
+  private async getRamVitals(): Promise<RamVitals> {
     const ram = await si.mem();
 
     const usedMemory = (ram.used / ram.total) * 100;
@@ -91,7 +94,7 @@ export class StatsService {
     return { usedMemory, freeMemory, totalMemory };
   }
 
-  private async getGpuStats(): Promise<GpuStats> {
+  private async getGpuVitals(): Promise<GpuVitals> {
     const { controllers } = await si.graphics();
 
     const gpu = controllers[0];
@@ -121,7 +124,7 @@ export class StatsService {
     };
   }
 
-  private async getNetworkStats(): Promise<NetworkStats> {
+  private async getNetworkVitals(): Promise<NetworkVitals> {
     const { name, speed } = this.defaultNetworkInterface;
 
     const network = (await si.networkStats(name))[0];
