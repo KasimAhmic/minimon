@@ -1,20 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Settings, defaultSettings } from '@ahmic/minimon-core';
 import { EventsService } from 'src/events/events.service';
 import { SettingsEvent } from './settings.event';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { INTERVAL_UPDATED } from './settings.constants';
 import { ReloadEvent } from './reload.event';
+import { PersistenceService } from 'src/persistence/persistence.service';
+import { PERSISTED_FILE } from 'src/persistence/persistence.constants';
 
 @Injectable()
 export class SettingsService {
   private settings: Settings;
 
-  constructor(private readonly eventsService: EventsService, private readonly eventEmitter: EventEmitter2) {
-    this.settings = defaultSettings;
+  constructor(
+    private readonly eventsService: EventsService,
+    private readonly eventEmitter: EventEmitter2,
+    @Inject(PERSISTED_FILE)
+    private readonly userSettings: Settings,
+    private readonly persistenceService: PersistenceService<Settings>,
+  ) {
+    this.settings = this.userSettings;
   }
 
-  getSettings(): Settings {
+  async getSettings(): Promise<Settings> {
     return this.settings;
   }
 
@@ -22,6 +30,8 @@ export class SettingsService {
     this.settings = { ...this.settings, ...settings };
 
     this.eventsService.emitEvent(new SettingsEvent(this.settings));
+
+    this.persistenceService.write(JSON.stringify(this.settings, null, 2));
 
     return this.settings;
   }

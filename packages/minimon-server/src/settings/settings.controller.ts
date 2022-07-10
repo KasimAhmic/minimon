@@ -8,7 +8,7 @@ export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
   @Get()
-  getSettings(): Settings {
+  getSettings(): Promise<Settings> {
     return this.settingsService.getSettings();
   }
 
