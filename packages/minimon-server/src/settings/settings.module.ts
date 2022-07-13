@@ -4,6 +4,7 @@ import { SettingsController } from './settings.controller';
 import { SettingsService } from './settings.service';
 import { PersistenceModule } from 'src/persistence/persistence.module';
 import { defaultSettings, Settings, ThemeMode } from '@ahmic/minimon-core';
+import { SETTINGS_FILE } from './settings.constants';
 import Joi from 'joi';
 
 @Module({
@@ -20,6 +21,7 @@ import Joi from 'joi';
         themeMode: Joi.string().valid(...Object.values(ThemeMode)),
         pollingInterval: Joi.number(),
       }),
+      fileId: SETTINGS_FILE,
     }),
   ],
   controllers: [SettingsController],

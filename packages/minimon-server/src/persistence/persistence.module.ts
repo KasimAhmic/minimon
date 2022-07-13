@@ -7,6 +7,7 @@ type BasePersistenceModuleConfig = {
   fileName: string;
   createFileIfNonExistant: boolean;
   validateFile: boolean;
+  fileId: string;
 };
 
 type FileCreationConfig =
@@ -35,7 +36,7 @@ export class PersistenceModule {
           useValue: config,
         },
         {
-          provide: PERSISTED_FILE,
+          provide: config.fileId,
           useFactory: async (persistenceService: PersistenceService<FileContentsType>) => {
             return persistenceService.read();
           },
