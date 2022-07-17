@@ -9,7 +9,7 @@
   },
   "private": true,
   "license": "AGPL-3.0-or-later",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "module": "./src/index.ts",
   "exports": {
     ".": "./dist/index.js",

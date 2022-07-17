@@ -26,7 +26,6 @@
     "reset": "rimraf ./node_modules ./dist"
   },
   "dependencies": {
-    "@ahmic/minimon-core": "*",
     "@fastify/static": "^6.4.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
