@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import Joi from 'joi';
-import { PERSISTED_FILE, PERSISTENCE_CONFIG } from './persistence.constants';
+import { PERSISTENCE_CONFIG } from './persistence.constants';
 import { PersistenceService } from './persistence.service';
 
 type BasePersistenceModuleConfig = {
@@ -43,7 +43,7 @@ export class PersistenceModule {
           inject: [PersistenceService],
         },
       ],
-      exports: [PersistenceService, PERSISTED_FILE],
+      exports: [PersistenceService, config.fileId],
     };
   }
 }
