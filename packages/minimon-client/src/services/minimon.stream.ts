@@ -1,4 +1,5 @@
 import { IMinimonEvent, IReloadEvent } from '@ahmic/minimon-core';
+import { noop } from 'util/helper.util';
 
 export interface EventSubscription {
   id: symbol;
@@ -10,8 +11,6 @@ export interface MinimonEventHandlers {
   onError: () => void;
   onMessage: (msg: MessageEvent) => void;
 }
-
-const noop = () => {};
 
 export class MinimonStream {
   private retries: number;
@@ -37,7 +36,7 @@ export class MinimonStream {
 
   connect(url: string, handlers?: Partial<MinimonEventHandlers>): void {
     if (handlers) {
-      this.eventHandlers = { ...this.eventHandlers, ...handlers };
+      this.updateHandlers(handlers);
     }
 
     const eventSource = new EventSource(url);
@@ -66,6 +65,10 @@ export class MinimonStream {
     } else {
       console.error('Max retries exceeded. Unable to connect to event stream.');
     }
+  }
+
+  updateHandlers(handlers: Partial<MinimonEventHandlers>): void {
+    this.eventHandlers = { ...this.eventHandlers, ...handlers };
   }
 
   subscribe<T extends IMinimonEvent>(event: T['type'], callback: (data: T['data']) => void): symbol {

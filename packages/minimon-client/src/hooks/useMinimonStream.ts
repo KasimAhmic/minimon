@@ -4,27 +4,51 @@ import { useCallback, useEffect } from 'react';
 import { baseUrl } from 'services/minimon.service';
 import { minimonStream } from 'services/minimon.stream';
 import { event, message, log } from 'slices';
+import { noop } from 'util/helper.util';
+import { useSettingsSelector } from './useSettingsSelector';
+
+// TODO: Re-evaluate this hook. Not 100% this is the best to handle conditionally firing off Redux
+// actions but this is also a hook I expect few people to use so maybe it's not worth the effort to
+// optimize/do it correctly.
+
+const ifDebugEnabled = (enabled: boolean, callback: () => unknown) => {
+  if (!enabled) return noop();
+
+  return callback();
+};
 
 export const useMinimonStream = () => {
   const dispatch = useAppDispatch();
 
-  const onConnect = useCallback(() => dispatch(event('connect')), [dispatch]);
+  const debugEnabled = useSettingsSelector((settings) => settings.showDebugScreen);
 
-  const onError = useCallback(() => dispatch(event('error')), [dispatch]);
+  const onConnect = useCallback(
+    () => ifDebugEnabled(debugEnabled, () => dispatch(event('connect'))),
+    [debugEnabled, dispatch],
+  );
+
+  const onError = useCallback(
+    () => ifDebugEnabled(debugEnabled, () => dispatch(event('error'))),
+    [debugEnabled, dispatch],
+  );
 
   const onMessage = useCallback(
     (e: MessageEvent) => {
       const data: IVitalsEvent = JSON.parse(e.data);
 
-      dispatch(message(data));
-      dispatch(log(`${data.created} ${data.type}`));
+      ifDebugEnabled(debugEnabled, () => dispatch(message(data)));
+      ifDebugEnabled(debugEnabled, () => dispatch(log(`${data.created} ${data.type}`)));
     },
-    [dispatch],
+    [debugEnabled, dispatch],
   );
 
   useEffect(() => {
-    minimonStream.connect(`${baseUrl}/events`, { onConnect, onMessage, onError });
+    minimonStream.connect(`${baseUrl}/events`);
 
     return () => minimonStream.disconnect();
+  }, []);
+
+  useEffect(() => {
+    minimonStream.updateHandlers({ onConnect, onMessage, onError });
   }, [onConnect, onMessage, onError]);
 };
