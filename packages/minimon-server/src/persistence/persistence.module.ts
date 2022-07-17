@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import Joi from 'joi';
 import { PERSISTENCE_CONFIG } from './persistence.constants';
 import { PersistenceService } from './persistence.service';
+import Joi from 'joi';
 
 type BasePersistenceModuleConfig = {
   fileName: string;

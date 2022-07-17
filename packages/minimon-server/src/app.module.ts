@@ -3,14 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MinimonConfigSchema } from './common/config.schema';
+import { AppController } from 'app.controller';
+import { AppService } from 'app.service';
+import { MinimonConfigSchema } from 'common/config.schema';
 import * as si from 'systeminformation';
-import { VitalsModule } from './vitals/vitals.module';
+import { VitalsModule } from 'vitals/vitals.module';
 import { platform } from 'os';
-import { SettingsModule } from './settings/settings.module';
-import { EventsModule } from './events/events.module';
+import { SettingsModule } from 'settings/settings.module';
+import { EventsModule } from 'events/events.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({

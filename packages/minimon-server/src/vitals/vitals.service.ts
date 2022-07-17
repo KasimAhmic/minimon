@@ -5,11 +5,11 @@ import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals } from '@a
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
 import { Metadata } from '@ahmic/minimon-core/metadata';
-import { EventsService } from 'src/events/events.service';
+import { EventsService } from 'events/events.service';
 import { VitalsEvent } from './vitals.event';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { OnEvent } from '@nestjs/event-emitter';
-import { INTERVAL_UPDATED } from 'src/settings/settings.constants';
+import { INTERVAL_UPDATED } from 'settings/settings.constants';
 
 @Injectable()
 export class VitalsService {
