@@ -2,16 +2,14 @@ import { Logger, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { AppController } from 'app.controller';
-import { AppService } from 'app.service';
 import { MinimonConfigSchema } from 'common/config.schema';
 import * as si from 'systeminformation';
 import { VitalsModule } from 'vitals/vitals.module';
-import { platform } from 'os';
+import { platform } from 'node:os';
 import { SettingsModule } from 'settings/settings.module';
 import { EventsModule } from 'events/events.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { CLIENT_DIR } from 'app.constants';
 
 @Module({
   imports: [
@@ -20,7 +18,10 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       validationSchema: MinimonConfigSchema,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'client', 'dist'),
+      rootPath: CLIENT_DIR,
+      serveStaticOptions: {
+        index: 'index.html',
+      },
     }),
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot({
@@ -32,8 +33,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     VitalsModule,
     SettingsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements OnApplicationShutdown {
   private readonly logger = new Logger(AppModule.name);
