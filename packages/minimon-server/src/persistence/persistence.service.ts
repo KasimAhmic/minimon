@@ -18,7 +18,7 @@ export class PersistenceService<FileContentsType> {
     const fileName = this.persistenceConfig.fileName;
 
     try {
-      file = await readFile(join(__dirname, fileName), {
+      file = await readFile(join(process.cwd(), fileName), {
         encoding: 'utf-8',
         flag: 'r',
       });
@@ -39,7 +39,7 @@ export class PersistenceService<FileContentsType> {
     const fileName = this.persistenceConfig.fileName;
 
     try {
-      await writeFile(join(__dirname, fileName), fileContents, {
+      await writeFile(join(process.cwd(), fileName), fileContents, {
         encoding: 'utf-8',
         flag: 'w',
       });
