@@ -9,14 +9,20 @@
   },
   "private": true,
   "license": "AGPL-3.0-or-later",
+  "bin": "dist/main.js",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch --preserveWatchOutput",
     "start:prod": "node dist/main",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "build:ci": "yarn build && yarn package",
+    "package": "yarn package:windows",
+    "package:windows": "pkg -t node16-win-x64 -o build/minimon-windows-x64 -C GZip .",
+    "package:macos": "pkg -t node16-macos-x64 -o build/minimon-macos-x64 -C GZip .",
+    "package:linux": "pkg -t node16-linux-x64 -o build/minimon-linux-x64 -C GZip .",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -82,21 +88,9 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ],
-    "rules": {
-      "subject-case": [
-        2,
-        "always",
-        [
-          "sentence-case"
-        ]
-      ]
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,md,ts,tsx}": "prettier --write"
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "assets": "dist/client/**",
+    "outputPath": "build"
   }
 }
