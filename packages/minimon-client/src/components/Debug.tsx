@@ -37,7 +37,7 @@ const useStyles = makeStyles()((theme) => ({
 export const Debug: FC = () => {
   const { classes } = useStyles();
 
-  const meta = useVitalsSelector((vitals) => vitals.metadata);
+  const meta = useVitalsSelector((vitals) => vitals.debugInfo);
   const showDebugScreen = useSettingsSelector((settings) => settings.showDebugScreen);
   const logs = useAppSelector(selectDebugLog);
   const lastEvent = useAppSelector(selectLastEvent);

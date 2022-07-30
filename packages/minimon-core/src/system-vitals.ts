@@ -1,15 +1,15 @@
-import { CpuVitals } from './cpu.vitals';
-import { GpuVitals } from './gpu.vitals';
-import { Metadata } from './metadata';
-import { NetworkVitals } from './network.vitals';
-import { RamVitals } from './ram.vitals';
+import { CpuVitals } from './cpu-vitals';
+import { GpuVitals } from './gpu-vitals';
+import { DebugInfo } from './debug-info';
+import { NetworkVitals } from './network-vitals';
+import { RamVitals } from './ram-vitals';
 
 export interface SystemVitals {
   cpu: CpuVitals;
   ram: RamVitals;
   gpu: GpuVitals;
   network: NetworkVitals;
-  metadata: Metadata;
+  debugInfo: DebugInfo;
 }
 
 export const defaultSystemVitals: SystemVitals = {
@@ -42,7 +42,7 @@ export const defaultSystemVitals: SystemVitals = {
     download: 0,
     usage: 0,
   },
-  metadata: {
+  debugInfo: {
     timestamp: '0ms',
     cpuVitalsProcessingTime: '0ms',
     ramVitalsProcessingTime: '0ms',

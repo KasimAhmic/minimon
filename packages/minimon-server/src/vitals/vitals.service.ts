@@ -4,7 +4,7 @@ import * as si from 'systeminformation';
 import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals } from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
-import { Metadata } from '@ahmic/minimon-core/metadata';
+import { DebugInfo } from '@ahmic/minimon-core/debug.info';
 import { EventsService } from 'events/events.service';
 import { VitalsEvent } from './vitals.event';
 import { SchedulerRegistry } from '@nestjs/schedule';
@@ -53,7 +53,7 @@ export class VitalsService {
     const [gpu, gpuVitalsProcessingTime] = await timed<GpuVitals>(() => this.getGpuVitals());
     const [network, networkVitalsProcessingTime] = await timed<NetworkVitals>(() => this.getNetworkVitals());
 
-    const metadata: Metadata = {
+    const debugInfo: DebugInfo = {
       timestamp: new Date().toISOString(),
       cpuVitalsProcessingTime: toMillis(cpuVitalsProcessingTime),
       ramVitalsProcessingTime: toMillis(ramVitalsProcessingTime),
@@ -67,7 +67,7 @@ export class VitalsService {
       ),
     };
 
-    this.setVitals({ cpu, ram, gpu, network, metadata });
+    this.setVitals({ cpu, ram, gpu, network, debugInfo });
   }
 
   private async getCpuVitals(): Promise<CpuVitals> {

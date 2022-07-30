@@ -1,4 +1,4 @@
-export interface Metadata {
+export interface DebugInfo {
   timestamp: string;
   cpuVitalsProcessingTime: string;
   ramVitalsProcessingTime: string;
