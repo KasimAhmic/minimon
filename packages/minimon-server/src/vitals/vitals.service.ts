@@ -105,6 +105,7 @@ export class VitalsService {
     const memoryFree = gpu.memoryFree;
     const powerDraw = gpu.powerDraw;
     const powerLimit = gpu.powerLimit;
+    const powerUsage = (powerDraw / powerLimit) * 100;
     const clockCore = gpu.clockCore;
     const clockMemory = gpu.clockMemory;
     const temperatureGpu = gpu.temperatureGpu ?? 0;
@@ -117,6 +118,7 @@ export class VitalsService {
       memoryFree,
       powerDraw,
       powerLimit,
+      powerUsage,
       clockCore,
       clockMemory,
       temperatureGpu,

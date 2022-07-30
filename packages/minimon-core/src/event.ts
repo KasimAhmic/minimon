@@ -1,5 +1,5 @@
 import { Settings } from './settings';
-import { SystemVitals } from './system.vitals';
+import { SystemVitals } from './system-vitals';
 
 export interface IMinimonEvent<T extends string = string, D = unknown> {
   type: T;

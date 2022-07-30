@@ -5,6 +5,7 @@ export interface GpuVitals {
   memoryFree: number;
   powerDraw: number;
   powerLimit: number;
+  powerUsage: number;
   clockCore: number;
   clockMemory: number;
   temperatureGpu: number;
