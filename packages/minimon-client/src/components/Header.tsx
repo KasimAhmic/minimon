@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import { ReactComponent as MinimonIcon } from '../minimon.svg';
+import MinimonIcon from '../minimon_flat_128.png';
 
 const useStyles = makeStyles()((theme) => ({
   toolbar: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles()((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(3),
   },
-  icon: {
+  logo: {
     width: 32,
     height: 32,
     marginRight: theme.spacing(1),
@@ -24,7 +24,7 @@ export const Header: FC = () => {
   return (
     <AppBar>
       <Toolbar className={classes.toolbar}>
-        <MinimonIcon className={classes.icon} />
+        <img src={MinimonIcon} className={classes.logo} alt='Minimon Logo' />
 
         <Typography variant='h6'>Minimon Admin</Typography>
       </Toolbar>
