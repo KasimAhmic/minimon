@@ -20,6 +20,8 @@ import Joi from 'joi';
         showDebugScreen: Joi.boolean(),
         themeMode: Joi.string().valid(...Object.values(ThemeMode)),
         pollingInterval: Joi.number(),
+        // TODO: Enhance this
+        layout: Joi.object(),
       }),
       fileId: SETTINGS_FILE,
     }),

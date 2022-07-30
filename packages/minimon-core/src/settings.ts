@@ -1,3 +1,5 @@
+import { defaultLayout, Layout } from './layout';
+
 export enum ThemeMode {
   LIGHT = 'light',
   DARK = 'dark',
@@ -8,6 +10,7 @@ export interface Settings {
   showDebugScreen: boolean;
   themeMode: ThemeMode;
   pollingInterval: number;
+  layout: Layout;
 }
 
 export const defaultSettings: Settings = {
@@ -15,4 +18,5 @@ export const defaultSettings: Settings = {
   showDebugScreen: false,
   themeMode: ThemeMode.LIGHT,
   pollingInterval: 1000,
+  layout: defaultLayout,
 };

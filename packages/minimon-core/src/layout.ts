@@ -3,27 +3,30 @@ import { NetworkVitals } from './network-vitals';
 import { RamVitals } from './ram-vitals';
 import { GpuVitals } from './gpu-vitals';
 
-export type Widget =
+export type Widget = {
+  label: string;
+} & (
   | { component: 'cpu'; property: keyof CpuVitals }
   | { component: 'ram'; property: keyof RamVitals }
   | { component: 'gpu'; property: keyof GpuVitals }
-  | { component: 'network'; property: keyof NetworkVitals };
+  | { component: 'network'; property: keyof NetworkVitals }
+);
 
 export interface Layout {
-  horizontalCount: number;
-  verticalCount: number;
+  columns: number;
+  rows: number;
   widgets: (Widget | null)[];
 }
 
 export const defaultLayout: Layout = {
-  horizontalCount: 3,
-  verticalCount: 2,
+  columns: 3,
+  rows: 2,
   widgets: [
-    { component: 'cpu', property: 'currentLoad' },
-    { component: 'ram', property: 'usedMemory' },
-    { component: 'gpu', property: 'utilizationGpu' },
-    { component: 'network', property: 'usage' },
-    null,
-    { component: 'gpu', property: 'temperatureGpu' },
+    { label: 'CPU Load', component: 'cpu', property: 'currentLoad' },
+    { label: 'RAM Used', component: 'ram', property: 'usedMemory' },
+    { label: 'GPU Load', component: 'gpu', property: 'utilizationGpu' },
+    { label: 'LAN Load', component: 'network', property: 'usage' },
+    { label: 'GPU Power', component: 'gpu', property: 'powerUsage' },
+    { label: 'GPU Temp', component: 'gpu', property: 'temperatureGpu' },
   ],
 };
