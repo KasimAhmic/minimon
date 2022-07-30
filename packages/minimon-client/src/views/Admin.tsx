@@ -184,7 +184,7 @@ export const Admin: FC = () => {
                   />
                 </TableCell>
                 <TableCell>
-                  Displays the debug screen on the Daashboard screen with some useful information including
+                  Displays the debug screen on the Dashboard screen with some useful information including
                   incoming messages and timings for system statistic calculations
                 </TableCell>
               </TableRow>
