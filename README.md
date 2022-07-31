@@ -44,7 +44,7 @@ Frontend React application that updates in real time and displays your system vi
 
 ## Installation
 
-Minimon is still a work in progress so much works remains on simplifying the installation process. Currently, the only way to run the application is to run it in dev mode. In the future, I hope to compile everything to a single binary that can be easily downloaded and ran, but for now, the steps below will get you started.
+Minimon is still a work in progress so much work remains on simplifying the installation process. Currently, the only way to run the application is to run it in dev mode. In the future, I hope to compile everything to a single binary that can be easily downloaded and ran, but for now, the steps below will get you started.
 
 1. Clone the repo
    - `git clone https://github.com/KasimAhmic/minimon.git`
