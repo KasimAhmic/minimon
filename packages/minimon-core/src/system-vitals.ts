@@ -32,6 +32,7 @@ export const defaultSystemVitals: SystemVitals = {
     memoryFree: 0,
     powerDraw: 0,
     powerLimit: 0,
+    powerUsage: 0,
     clockCore: 0,
     clockMemory: 0,
     temperatureGpu: 0,
