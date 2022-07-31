@@ -1,5 +1,5 @@
 <div align="center">
-   <img src="./assets/minimon.png?" width="256px" height="256px" />
+   <img src="./assets/minimon.png" width="256px" height="256px" />
    <h1 align="center">Minimon</h1>
 </div>
 
