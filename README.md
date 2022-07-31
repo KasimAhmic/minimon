@@ -6,7 +6,11 @@
 <div align="center">
 
 [![License: AGPL-3.0](https://img.shields.io/github/license/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/blob/main/LICENSE)
-[![Minimon Issues](https://img.shields.io/github/issues/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/issues)
+[![Code Size](https://img.shields.io/github/languages/code-size/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon)
+[![Downloads](https://img.shields.io/github/downloads/KasimAhmic/minimon/total)](https://github.com/KasimAhmic/minimon/releases)
+<br />
+[![Minimon Open Issues](https://img.shields.io/github/issues-raw/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/issues)
+[![Minimon Closed Issues](https://img.shields.io/github/issues-closed-raw/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/issues?q=is%3Aclosed)
 [![Minimon Pull Requests](https://img.shields.io/github/issues-pr/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/pulls)
 [![Minimon Commit Activity](https://img.shields.io/github/commit-activity/w/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/commits/main)
 <br />
