@@ -98,17 +98,17 @@ export class VitalsService {
 
     const gpu = controllers[0];
 
-    const fanSpeed = gpu.fanSpeed;
-    const memoryTotal = gpu.memoryTotal;
-    const memoryUsed = gpu.memoryUsed;
-    const memoryFree = gpu.memoryFree;
-    const powerDraw = gpu.powerDraw;
-    const powerLimit = gpu.powerLimit;
-    const powerUsage = (powerDraw / powerLimit) * 100;
-    const clockCore = gpu.clockCore;
-    const clockMemory = gpu.clockMemory;
-    const temperatureGpu = gpu.temperatureGpu ?? 0;
-    const utilizationGpu = gpu.utilizationGpu ?? 0;
+    const fanSpeed = gpu?.fanSpeed ?? 0;
+    const memoryTotal = gpu?.memoryTotal ?? 0;
+    const memoryUsed = gpu?.memoryUsed ?? 0;
+    const memoryFree = gpu?.memoryFree ?? 0;
+    const powerDraw = gpu?.powerDraw ?? 0;
+    const powerLimit = gpu?.powerLimit ?? 0;
+    const powerUsage = powerLimit > 0 ? (powerDraw / powerLimit) * 100 : 0;
+    const clockCore = gpu?.clockCore;
+    const clockMemory = gpu?.clockMemory;
+    const temperatureGpu = gpu?.temperatureGpu ?? 0;
+    const utilizationGpu = gpu?.utilizationGpu ?? 0;
 
     return {
       fanSpeed,
