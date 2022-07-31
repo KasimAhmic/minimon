@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { timed, toMillis } from '../common/time.util';
 import * as si from 'systeminformation';
-import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals } from '@ahmic/minimon-core';
+import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals, DebugInfo } from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
-import { DebugInfo } from '@ahmic/minimon-core/debug.info';
 import { EventsService } from 'events/events.service';
 import { VitalsEvent } from './vitals.event';
 import { SchedulerRegistry } from '@nestjs/schedule';
