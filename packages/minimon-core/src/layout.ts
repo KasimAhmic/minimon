@@ -1,15 +1,19 @@
-import { CpuVitals } from './cpu-vitals';
-import { NetworkVitals } from './network-vitals';
-import { RamVitals } from './ram-vitals';
-import { GpuVitals } from './gpu-vitals';
+import {
+  SystemVitalType,
+  CpuVitalProperty,
+  GpuVitalProperty,
+  NetworkVitalProperty,
+  RamVitalProperty,
+} from 'system-vitals';
 
 export type Widget = {
+  vital: SystemVitalType;
   label: string;
 } & (
-  | { component: 'cpu'; property: keyof CpuVitals }
-  | { component: 'ram'; property: keyof RamVitals }
-  | { component: 'gpu'; property: keyof GpuVitals }
-  | { component: 'network'; property: keyof NetworkVitals }
+  | { vital: 'cpu'; property: CpuVitalProperty }
+  | { vital: 'ram'; property: RamVitalProperty }
+  | { vital: 'gpu'; property: GpuVitalProperty }
+  | { vital: 'network'; property: NetworkVitalProperty }
 );
 
 export interface Layout {
@@ -22,11 +26,11 @@ export const defaultLayout: Layout = {
   columns: 3,
   rows: 2,
   widgets: [
-    { label: 'CPU Load', component: 'cpu', property: 'currentLoad' },
-    { label: 'RAM Used', component: 'ram', property: 'usedMemory' },
-    { label: 'GPU Load', component: 'gpu', property: 'utilizationGpu' },
-    { label: 'LAN Load', component: 'network', property: 'usage' },
-    { label: 'GPU Power', component: 'gpu', property: 'powerUsage' },
-    { label: 'GPU Temp', component: 'gpu', property: 'temperatureGpu' },
+    { label: 'CPU Load', vital: 'cpu', property: 'currentLoad' },
+    { label: 'RAM Used', vital: 'ram', property: 'usedMemory' },
+    { label: 'GPU Load', vital: 'gpu', property: 'utilizationGpu' },
+    { label: 'LAN Load', vital: 'network', property: 'usage' },
+    { label: 'GPU Power', vital: 'gpu', property: 'powerDraw' },
+    { label: 'GPU Temp', vital: 'gpu', property: 'temperatureGpu' },
   ],
 };
