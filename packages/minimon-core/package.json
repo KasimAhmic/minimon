@@ -16,10 +16,15 @@
     "dist/"
   ],
   "scripts": {
-    "start:dev": "tsc --watch --preserveWatchOutput",
+    "start:dev": "rollup -c --watch",
     "prebuild": "rimraf dist",
-    "build": "tsc --build",
+    "build": "rollup -c",
     "reset": "rimraf dist"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "esbuild": "^0.14.53",
+    "rollup": "^2.77.2",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-esbuild": "^4.9.1"
+  }
 }

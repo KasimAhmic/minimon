@@ -4,7 +4,7 @@ import {
   GpuVitalProperty,
   NetworkVitalProperty,
   RamVitalProperty,
-} from 'system-vitals';
+} from './system-vitals';
 
 export type Widget = {
   vital: SystemVitalType;

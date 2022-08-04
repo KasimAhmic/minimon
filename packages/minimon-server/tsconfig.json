@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
