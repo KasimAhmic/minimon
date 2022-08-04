@@ -1,5 +1,6 @@
 {
   "extends": "../../tsconfig.json",
+  "exclude": ["dist"],
   "compilerOptions": {
     "module": "commonjs",
     "baseUrl": "./src",
@@ -16,6 +17,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "preserveSymlinks": false
+    "preserveSymlinks": false,
+    "incremental": false
   }
 }

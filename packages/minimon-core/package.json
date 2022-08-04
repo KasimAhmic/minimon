@@ -10,22 +10,8 @@
   "private": true,
   "license": "AGPL-3.0-or-later",
   "main": "./dist/index.js",
-  "module": "./src/index.ts",
-  "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/**/*.js"
-  },
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "dist/index.d.ts": [
-        "dist/index.d.ts"
-      ],
-      "*": [
-        "dist/*"
-      ]
-    }
-  },
   "files": [
     "dist/"
   ],

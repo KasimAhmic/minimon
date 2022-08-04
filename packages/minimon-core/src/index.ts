@@ -7,3 +7,4 @@ export * from './network-vitals';
 export * from './ram-vitals';
 export * from './settings';
 export * from './system-vitals';
+export * from './utils';
