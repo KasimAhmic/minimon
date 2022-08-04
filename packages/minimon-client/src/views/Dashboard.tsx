@@ -19,10 +19,6 @@ const useStyles = makeStyles<ThemeProps>()((theme, { columns, rows }) => ({
     padding: theme.spacing(2),
     boxSizing: 'border-box',
   },
-  break: {
-    flexBasis: '100%',
-    height: 0,
-  },
   widgetWrapper: {
     display: 'flex',
     justifyContent: 'center',
@@ -44,15 +40,7 @@ export const Dashboard: FC = () => {
       {layout.widgets.map((widget, index) => (
         <div key={widget?.label ?? `null-${index}`} className={classes.widgetWrapper}>
           {widget && (
-            <Dial
-              key={widget.label}
-              label={widget.label}
-              value={(vitals) =>
-                // TODO: This type cast _should_ be safe since this type is validated in Core. When
-                // user input is enabled, we _may_ need to revalidate it.
-                vitals[widget.component][widget.property as keyof typeof vitals[typeof widget.component]]
-              }
-            />
+            <Dial key={widget.label} label={widget.label} vital={widget.vital} property={widget.property} />
           )}
         </div>
       ))}

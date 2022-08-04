@@ -1,5 +1,4 @@
-import { IMinimonEvent, IReloadEvent } from '@ahmic/minimon-core';
-import { noop } from 'util/helper.util';
+import { IMinimonEvent, IReloadEvent, noop } from '@ahmic/minimon-core';
 
 export interface EventSubscription {
   id: symbol;

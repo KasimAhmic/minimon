@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { LinearProgress, Typography } from '@mui/material';
-import { SystemVitalsSelector, useVitalPercentage } from 'hooks';
+import { SystemVitalsSelector, useRescaledValue } from 'hooks';
 import { makeStyles } from 'tss-react/mui';
 
 const size = 30;
@@ -40,13 +40,13 @@ export interface BarProps {
 export const Bar: FC<BarProps> = ({ label, value, min = 0, max = 100 }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useVitalPercentage(value, min, max);
+  // const { normalizedValue, formattedValue } = useVitalPercentage(value, min, max);
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.label}>{label}</Typography>
+      {/* <Typography className={classes.label}>{label}</Typography>
       <LinearProgress variant='determinate' value={normalizedValue} className={classes.progress} />
-      <Typography className={classes.value}>{formattedValue}</Typography>
+      <Typography className={classes.value}>{formattedValue}</Typography> */}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CircularProgress, Typography } from '@mui/material';
-import { SystemVitalsSelector, useVitalPercentage } from 'hooks';
+import { useRescaledValue } from 'hooks';
+import { SystemVitalType } from '@ahmic/minimon-core';
 
 const size = 230;
 
@@ -45,16 +46,18 @@ const useStyles = makeStyles()((theme) => ({
 
 export interface DialProps {
   label: string;
-  value: number | SystemVitalsSelector;
-  min?: number | SystemVitalsSelector;
-  max?: number | SystemVitalsSelector;
-  suffix?: string;
+  vital: SystemVitalType;
+  property: string;
 }
 
-export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100, suffix }) => {
+export const Dial: FC<DialProps> = ({ label, vital, property }) => {
   const { classes } = useStyles();
 
-  const { normalizedValue, formattedValue } = useVitalPercentage(value, min, max, true, suffix);
+  const { rescaledValue, valueLabel } = useRescaledValue(
+    // TODO: This type cast _should_ be safe since this type is validated in Core. When
+    // user input is enabled, we _may_ need to revalidate it.
+    (vitals) => vitals[vital][property as keyof typeof vitals[typeof vital]],
+  );
 
   return (
     <div className={classes.root}>
@@ -71,14 +74,14 @@ export const Dial: FC<DialProps> = ({ label, value, min = 0, max = 100, suffix }
         />
         <CircularProgress
           variant='determinate'
-          value={normalizedValue}
+          value={rescaledValue}
           size={size}
           thickness={10}
           className={classes.progress}
         />
 
         <Typography className={classes.value} variant='h4'>
-          {formattedValue}
+          {valueLabel}
         </Typography>
       </div>
 

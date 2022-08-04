@@ -1,10 +1,9 @@
-import { IVitalsEvent } from '@ahmic/minimon-core';
+import { IVitalsEvent, noop } from '@ahmic/minimon-core';
 import { useAppDispatch } from 'app/hooks';
 import { useCallback, useEffect } from 'react';
 import { baseUrl } from 'services/minimon.service';
 import { minimonStream } from 'services/minimon.stream';
 import { event, message, log } from 'slices';
-import { noop } from 'util/helper.util';
 import { useSettingsSelector } from './useSettingsSelector';
 
 // TODO: Re-evaluate this hook. Not 100% this is the best to handle conditionally firing off Redux
