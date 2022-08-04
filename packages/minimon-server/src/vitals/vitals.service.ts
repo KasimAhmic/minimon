@@ -1,7 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { timed, toMillis } from '../common/time.util';
 import * as si from 'systeminformation';
-import { CpuVitals, GpuVitals, NetworkVitals, RamVitals, SystemVitals, DebugInfo } from '@ahmic/minimon-core';
+import {
+  CpuVitals,
+  GpuVitals,
+  NetworkVitals,
+  RamVitals,
+  SystemVitals,
+  DebugInfo,
+  VitalsData,
+  roundFloat,
+} from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
 import { EventsService } from 'events/events.service';
@@ -46,6 +55,10 @@ export class VitalsService {
     this.eventsService.emitEvent(new VitalsEvent(vitals));
   }
 
+  private createVitals(currentValue: number, minValue: number, maxValue: number, label: string): VitalsData {
+    return { currentValue, minValue, maxValue, label };
+  }
+
   async updateVitals(): Promise<void> {
     const [cpu, cpuVitalsProcessingTime] = await timed<CpuVitals>(() => this.getCpuVitals());
     const [ram, ramVitalsProcessingTime] = await timed<RamVitals>(() => this.getRamVitals());
@@ -75,22 +88,29 @@ export class VitalsService {
     const temp = await si.cpuTemperature();
 
     const coreCount = load.cpus.length;
-    const currentLoad = load.currentLoad;
+    const currentLoad = roundFloat(load.currentLoad);
     const currentSpeed = speed.avg ?? 0;
     const currentTemp = temp.main ?? 0;
-    const maxTemp = temp.max ?? 0;
 
-    return { currentLoad, coreCount, currentSpeed, currentTemp, maxTemp };
+    return {
+      coreCount: this.createVitals(coreCount, 0, coreCount, `${coreCount}`),
+      currentLoad: this.createVitals(currentLoad, 0, 100, `${currentLoad}%`),
+      currentSpeed: this.createVitals(currentSpeed, 0, 0, `${currentSpeed}`),
+      currentTemp: this.createVitals(currentTemp, 0, 100, `${currentTemp}°C`),
+    };
   }
 
   private async getRamVitals(): Promise<RamVitals> {
     const ram = await si.mem();
 
-    const usedMemory = (ram.used / ram.total) * 100;
-    const freeMemory = (ram.available / ram.total) * 100;
-    const totalMemory = ram.total;
+    const usedMemory = roundFloat(ram.used / 1e9);
+    const freeMemory = roundFloat(ram.available / 1e9);
+    const totalMemory = roundFloat(ram.total / 1e9);
 
-    return { usedMemory, freeMemory, totalMemory };
+    return {
+      usedMemory: this.createVitals(usedMemory, 0, totalMemory, `${usedMemory} GB`),
+      freeMemory: this.createVitals(freeMemory, 0, totalMemory, `${freeMemory} GB`),
+    };
   }
 
   private async getGpuVitals(): Promise<GpuVitals> {
@@ -104,24 +124,20 @@ export class VitalsService {
     const memoryFree = gpu?.memoryFree ?? 0;
     const powerDraw = gpu?.powerDraw ?? 0;
     const powerLimit = gpu?.powerLimit ?? 0;
-    const powerUsage = powerLimit > 0 ? (powerDraw / powerLimit) * 100 : 0;
-    const clockCore = gpu?.clockCore;
-    const clockMemory = gpu?.clockMemory;
+    const clockCore = gpu?.clockCore ?? 0;
+    const clockMemory = gpu?.clockMemory ? gpu.clockMemory / 1000 : 0;
     const temperatureGpu = gpu?.temperatureGpu ?? 0;
     const utilizationGpu = gpu?.utilizationGpu ?? 0;
 
     return {
-      fanSpeed,
-      memoryTotal,
-      memoryUsed,
-      memoryFree,
-      powerDraw,
-      powerLimit,
-      powerUsage,
-      clockCore,
-      clockMemory,
-      temperatureGpu,
-      utilizationGpu,
+      fanSpeed: this.createVitals(fanSpeed, 0, 5000, `${fanSpeed} RPM`),
+      memoryUsed: this.createVitals(memoryUsed, 0, memoryTotal, `${memoryUsed} GB`),
+      memoryFree: this.createVitals(memoryFree, 0, memoryTotal, `${memoryFree} GB`),
+      powerDraw: this.createVitals(powerDraw, 0, powerLimit, `${powerDraw} W`),
+      clockCore: this.createVitals(clockCore, 0, 3, `${clockCore} GHz`),
+      clockMemory: this.createVitals(clockMemory, 0, 10, `${clockMemory} GHz`),
+      temperatureGpu: this.createVitals(temperatureGpu, 0, 100, `${temperatureGpu}°C`),
+      utilizationGpu: this.createVitals(utilizationGpu, 0, 100, `${utilizationGpu}%`),
     };
   }
 
@@ -130,10 +146,20 @@ export class VitalsService {
 
     const network = (await si.networkStats(name))[0];
 
-    const upload = network.tx_sec;
-    const download = network.rx_sec;
-    const usage = (upload + download) / speed;
+    const maxSpeedMegabits = speed / 1000;
 
-    return { upload, download, usage };
+    const uploadBytesPerSecond = network.tx_sec;
+    const downloadBytesPerSecond = network.rx_sec;
+    const usagePercentage = (uploadBytesPerSecond + downloadBytesPerSecond) / speed;
+
+    const upload = roundFloat(uploadBytesPerSecond / 1e9);
+    const download = roundFloat(downloadBytesPerSecond / 1e9);
+    const usage = roundFloat(usagePercentage);
+
+    return {
+      upload: this.createVitals(upload, 0, maxSpeedMegabits, `${upload} Mbps`),
+      download: this.createVitals(download, 0, maxSpeedMegabits, `${download} Mbps`),
+      usage: this.createVitals(usage, 0, maxSpeedMegabits, `${usage}%`),
+    };
   }
 }
