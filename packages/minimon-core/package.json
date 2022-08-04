@@ -19,10 +19,15 @@
     "start:dev": "rollup -c --watch",
     "prebuild": "rimraf dist",
     "build": "rollup -c",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "",
     "reset": "rimraf dist"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
     "esbuild": "^0.14.53",
+    "eslint": "^8.21.0",
     "rollup": "^2.77.2",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-esbuild": "^4.9.1"

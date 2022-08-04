@@ -71,6 +71,6 @@
     }
   },
   "lint-staged": {
-    "pacakges/**/src/*.{js,css,md,ts,tsx}": "prettier --write"
+    "packages/**/src/**/*.{js,css,md,ts,tsx}": "prettier --write"
   }
 }

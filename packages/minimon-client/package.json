@@ -15,6 +15,7 @@
     "start": "serve -s ./build",
     "build": "craco build",
     "test": "craco test",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "eject": "craco eject",
     "reset": "rimraf ./node_modules ./build"
   },
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@craco/craco": "^6.4.3",
     "craco-esbuild": "^0.5.1",
+    "eslint": "^8.21.0",
     "react-scripts": "5.0.1"
   },
   "eslintConfig": {

@@ -1,3 +1,5 @@
+// @ts-check
+
 const CracoEsbuildPlugin = require('craco-esbuild');
 
 module.exports = {
