@@ -8,7 +8,7 @@ describe('Time Util', () => {
       });
 
       expect(result).toBe('done');
-      expect(duration).toBeGreaterThanOrEqual(5);
+      expect(duration).toBeGreaterThanOrEqual(1);
     });
   });
 
