@@ -10,7 +10,7 @@ export class PersistenceService<FileContentsType> {
 
   constructor(
     @Inject(PERSISTENCE_CONFIG)
-    private readonly persistenceConfig: PersistenceModuleConfig<FileContentsType>,
+    readonly persistenceConfig: PersistenceModuleConfig<FileContentsType>,
   ) {}
 
   async read(): Promise<FileContentsType> {
