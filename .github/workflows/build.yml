@@ -92,5 +92,4 @@ jobs:
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
         with:
-          files: ./packages/minimon-client/coverage/clover.xml,./packages/minimon-server/coverage/clover.xml
-          flags: unittests
+          token: ${{ secrets.CODECOV_TOKEN }}
