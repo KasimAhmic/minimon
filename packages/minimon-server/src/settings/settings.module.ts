@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { EventsModule } from 'events/events.module';
+import { EventsModule } from '../events/events.module';
 import { SettingsController } from './settings.controller';
 import { SettingsService } from './settings.service';
-import { PersistenceModule } from 'persistence/persistence.module';
+import { PersistenceModule } from '../persistence/persistence.module';
 import { defaultSettings, Settings, ThemeMode } from '@ahmic/minimon-core';
 import { SETTINGS_FILE } from './settings.constants';
 import Joi from 'joi';

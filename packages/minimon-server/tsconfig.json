@@ -11,7 +11,6 @@
     "target": "es2020",
     "sourceMap": false,
     "outDir": "./dist",
-    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

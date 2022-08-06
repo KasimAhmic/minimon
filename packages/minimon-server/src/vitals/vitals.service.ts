@@ -13,11 +13,11 @@ import {
 } from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
-import { EventsService } from 'events/events.service';
+import { EventsService } from '../events/events.service';
 import { VitalsEvent } from './vitals.event';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { OnEvent } from '@nestjs/event-emitter';
-import { INTERVAL_UPDATED } from 'settings/settings.constants';
+import { INTERVAL_UPDATED } from '../settings/settings.constants';
 
 @Injectable()
 export class VitalsService {
