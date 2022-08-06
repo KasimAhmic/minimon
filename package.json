@@ -18,7 +18,7 @@
   },
   "scripts": {
     "init": "yarn && lerna bootstrap && lerna link && yarn prepare && yarn build:core",
-    "init:ci": "yarn && lerna bootstrap && lerna link && yarn prepare",
+    "init:ci": "yarn --frozen-lockfile && lerna bootstrap && lerna link",
     "prepare": "husky install",
     "start:core": "yarn workspace @ahmic/minimon-core start:dev",
     "start:server": "yarn workspace @ahmic/minimon-server start:dev",
