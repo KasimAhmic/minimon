@@ -8,6 +8,7 @@
 [![License: AGPL-3.0](https://img.shields.io/github/license/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/blob/main/LICENSE)
 [![Code Size](https://img.shields.io/github/languages/code-size/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon)
 [![Downloads](https://img.shields.io/github/downloads/KasimAhmic/minimon/total)](https://github.com/KasimAhmic/minimon/releases)
+[![Test Coverage](https://codecov.io/gh/KasimAhmic/minimon/branch/main/graph/badge.svg?token=Q0Q8CHOW4H)](https://codecov.io/gh/KasimAhmic/minimon)
 <br />
 [![Minimon Open Issues](https://img.shields.io/github/issues-raw/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/issues)
 [![Minimon Closed Issues](https://img.shields.io/github/issues-closed-raw/KasimAhmic/minimon)](https://github.com/KasimAhmic/minimon/issues?q=is%3Aclosed)
