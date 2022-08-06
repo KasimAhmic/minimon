@@ -49,6 +49,9 @@ jobs:
       - name: Install dependencies
         run: yarn run init:ci
 
+      - name: Build Core
+        run: yarn build:core
+
       - name: Lint Core
         run: yarn lint:core
 
@@ -73,6 +76,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn run init:ci
+
+      - name: Build Core
+        run: yarn build:core
 
       - name: Test Core
         run: yarn test:core
