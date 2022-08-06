@@ -1,14 +1,18 @@
-name: 'CI/CD Pipeline'
+name: CI/CD Pipeline
 
 on:
   push:
     branches: ['main']
   pull_request:
     branches: ['main']
+  workflow_dispatch:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.ipfs-pin.outputs.hash }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,29 +26,53 @@ jobs:
       - name: Install dependencies
         run: yarn run init:ci
 
-      - name: 'Build Core'
+      - name: Build Core
         run: yarn build:core
 
-      - name: 'Build Client'
+      - name: Build Client
         run: yarn build:client
 
-      - name: 'Build Server'
+      - name: Build Server
         run: yarn build:server
+      
+      - name: Upload result
+        uses: actions/upload-artifact@v3
+        with:
+          name: minimon
+          path: .
 
-      - name: 'Lint Core'
+  lint:
+    name: Lint
+    needs: build
+    runs-on: ubuntu-latest
+      - name: Download result
+        uses: actions/download-artifact@v3
+        with:
+          name: minimon
+
+      - name: Lint Core
         run: yarn lint:core
 
-      - name: 'Lint Client'
+      - name: Lint Client
         run: yarn lint:client
 
-      - name: 'Lint Server'
+      - name: Lint Server
         run: yarn lint:server
 
-      - name: 'Test Core'
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+      - name: Download result
+        uses: actions/download-artifact@v3
+        with:
+          name: minimon
+
+      - name: Test Core
         run: yarn test:core
 
-      - name: 'Test Client'
+      - name: Test Client
         run: yarn test:client
 
-      - name: 'Test Server'
+      - name: Test Server
         run: yarn test:server
