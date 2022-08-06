@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Server
         run: yarn build:server
-      
+
       - name: Upload result
         uses: actions/upload-artifact@v3
         with:
@@ -45,6 +45,7 @@ jobs:
     name: Lint
     needs: build
     runs-on: ubuntu-latest
+    steps:
       - name: Download result
         uses: actions/download-artifact@v3
         with:
@@ -63,6 +64,7 @@ jobs:
     name: Test
     needs: build
     runs-on: ubuntu-latest
+    steps:
       - name: Download result
         uses: actions/download-artifact@v3
         with:
