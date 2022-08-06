@@ -1,0 +1,58 @@
+name: 'Build'
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: 'Build'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn run init:ci
+
+      - name: 'Build Core'
+        run: yarn build:core
+
+      - name: 'Build Client'
+        run: yarn build:client
+
+      - name: 'Build Server'
+        run: yarn build:server
+
+  lint:
+    runs-on: 'ubuntu-latest'
+    name: 'Lint'
+    steps:
+      - name: 'Lint Core'
+        run: yarn lint:core
+
+      - name: 'Lint Client'
+        run: yarn lint:client
+
+      - name: 'Lint Server'
+        run: yarn lint:server
+
+  test:
+    runs-on: 'ubuntu-latest'
+    name: 'Test'
+    steps:
+      - name: 'Test Core'
+        run: yarn test:core
+
+      - name: 'Test Client'
+        run: yarn test:client
+
+      - name: 'Test Server'
+        run: yarn test:server

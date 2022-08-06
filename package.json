@@ -18,6 +18,7 @@
   },
   "scripts": {
     "init": "yarn && lerna bootstrap && lerna link && yarn prepare && yarn build:core",
+    "init:ci": "yarn && lerna bootstrap && lerna link && yarn prepare",
     "prepare": "husky install",
     "start:core": "yarn workspace @ahmic/minimon-core start:dev",
     "start:server": "yarn workspace @ahmic/minimon-server start:dev",
