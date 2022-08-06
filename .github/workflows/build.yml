@@ -11,8 +11,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    outputs:
-      hash: ${{ steps.ipfs-pin.outputs.hash }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,21 +33,21 @@ jobs:
       - name: Build Server
         run: yarn build:server
 
-      - name: Upload result
-        uses: actions/upload-artifact@v3
-        with:
-          name: minimon
-          path: .
-
   lint:
     name: Lint
-    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download result
-        uses: actions/download-artifact@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
         with:
-          name: minimon
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn run init:ci
 
       - name: Lint Core
         run: yarn lint:core
@@ -62,13 +60,19 @@ jobs:
 
   test:
     name: Test
-    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download result
-        uses: actions/download-artifact@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
         with:
-          name: minimon
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn run init:ci
 
       - name: Test Core
         run: yarn test:core
