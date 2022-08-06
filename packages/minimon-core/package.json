@@ -20,7 +20,7 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c",
     "lint": "eslint \"src/**/*.ts\"",
-    "test": "",
+    "test": "exit 0",
     "reset": "rimraf dist"
   },
   "devDependencies": {

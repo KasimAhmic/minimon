@@ -16,7 +16,7 @@ module.exports = {
           target: 'es2020',
           css: true,
         },
-        skipEsbuildJest: false,
+        skipEsbuildJest: true,
         esbuildJestOptions: {
           loaders: {
             '.ts': 'ts',

@@ -2,14 +2,14 @@ import { Logger, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { MinimonConfigSchema } from 'common/config.schema';
+import { MinimonConfigSchema } from './common/config.schema';
 import * as si from 'systeminformation';
-import { VitalsModule } from 'vitals/vitals.module';
+import { VitalsModule } from './vitals/vitals.module';
 import { platform } from 'node:os';
-import { SettingsModule } from 'settings/settings.module';
-import { EventsModule } from 'events/events.module';
+import { SettingsModule } from './settings/settings.module';
+import { EventsModule } from './events/events.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { CLIENT_DIR } from 'app.constants';
+import { CLIENT_DIR } from './app.constants';
 
 @Module({
   imports: [

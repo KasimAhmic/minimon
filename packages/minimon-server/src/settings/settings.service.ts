@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Settings, defaultSettings } from '@ahmic/minimon-core';
-import { EventsService } from 'events/events.service';
+import { EventsService } from '../events/events.service';
 import { SettingsEvent } from './settings.event';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { INTERVAL_UPDATED, SETTINGS_FILE } from './settings.constants';
 import { ReloadEvent } from './reload.event';
-import { PersistenceService } from 'persistence/persistence.service';
+import { PersistenceService } from '../persistence/persistence.service';
 
 @Injectable()
 export class SettingsService {
