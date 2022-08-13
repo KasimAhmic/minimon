@@ -1,14 +1,14 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 interface StyleProps {
-  color?: IconColor;
+  color: IconColor;
   iconSize: number;
 }
 
 const useStyles = makeStyles<StyleProps>()((theme, { color, iconSize }) => ({
   root: {
-    color: color && theme.palette[color].main,
+    color: theme.palette[color].main,
     fontSize: iconSize,
   },
 }));
@@ -24,40 +24,31 @@ export interface IconProps {
   }>;
 }
 
-const muiIconsPrefix = 'material-icons';
+const muiIconClasses = {
+  outlined: 'material-icons-outlined',
+  round: 'material-icons-round',
+  sharp: 'material-icons-sharp',
+  'two-tone': 'material-icons-two-tone',
+  filled: 'material-icons',
+};
 
 export const Icon: FC<IconProps> = ({
   icon,
-  color,
+  color = 'primary',
   size = 'medium',
   sizeMap = {
     small: 16,
     medium: 24,
     large: 32,
   },
-  variant,
+  variant = 'filled',
   classes,
   ...props
 }) => {
-  const muiIconClass = useMemo<string>(() => {
-    switch (variant) {
-      case 'outlined':
-        return `${muiIconsPrefix}-outlined`;
-      case 'round':
-        return `${muiIconsPrefix}-round`;
-      case 'sharp':
-        return `${muiIconsPrefix}-sharp`;
-      case 'two-tone':
-        return `${muiIconsPrefix}-two-tone`;
-      default:
-        return muiIconsPrefix;
-    }
-  }, [variant]);
-
   const { classes: defaultClasses } = useStyles({ color, iconSize: sizeMap[size] }, { props: { classes } });
 
   return (
-    <span {...props} className={`${muiIconClass} ${defaultClasses.root}`}>
+    <span {...props} className={`${muiIconClasses[variant]} ${defaultClasses.root}`}>
       {icon}
     </span>
   );
