@@ -12,7 +12,10 @@ export const useSettingsSelector = <T extends SelectFromResult>(selector: T): Re
   return data;
 };
 
-export const useSettingsStatus = () => {
+export const useSettingsStatus = (): Pick<
+  ReturnType<typeof minimonServiceEndpoints.getSettings.useQueryState>,
+  'isSuccess' | 'isError' | 'isFetching' | 'isLoading' | 'isUninitialized'
+> => {
   const { isSuccess, isError, isFetching, isLoading, isUninitialized } =
     minimonServiceEndpoints.getSettings.useQueryState(undefined);
 
