@@ -12,12 +12,12 @@
   "proxy": "http://localhost:8080",
   "scripts": {
     "start:dev": "craco start",
-    "start": "serve -s ./build",
+    "start:prod": "serve -s ./build",
+    "prebuild": "rimraf build",
     "build": "craco build",
-    "test": "craco test",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "eject": "craco eject",
-    "reset": "rimraf ./node_modules ./build"
+    "test": "craco test",
+    "reset": "rimraf ./node_modules ./build ./coverage"
   },
   "dependencies": {
     "@ahmic/minimon-core": "*",

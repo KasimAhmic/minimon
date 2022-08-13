@@ -29,7 +29,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "reset": "rimraf ./node_modules ./dist"
+    "reset": "rimraf ./node_modules ./dist ./coverage"
   },
   "dependencies": {
     "@fastify/static": "^6.4.0",
