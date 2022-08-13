@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { LinearProgress, Typography } from '@mui/material';
-import { SystemVitalsSelector, useRescaledValue } from 'hooks';
+import { SystemVitalsSelector } from 'hooks';
 import { makeStyles } from 'tss-react/mui';
 
 const size = 30;
