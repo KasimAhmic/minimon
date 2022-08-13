@@ -12,8 +12,15 @@ export const useSettingsSelector = <T extends SelectFromResult>(selector: T): Re
   return data;
 };
 
-export const useAreSettingsLoaded = (): boolean => {
-  const { isSuccess } = minimonServiceEndpoints.getSettings.useQueryState(undefined);
+export const useSettingsStatus = () => {
+  const { isSuccess, isError, isFetching, isLoading, isUninitialized } =
+    minimonServiceEndpoints.getSettings.useQueryState(undefined);
 
-  return isSuccess;
+  return {
+    isSuccess,
+    isError,
+    isFetching,
+    isLoading,
+    isUninitialized,
+  };
 };
