@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "sourceMap": true,
     "noEmit": false,
     "preserveSymlinks": false,
