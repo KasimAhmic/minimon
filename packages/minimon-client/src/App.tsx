@@ -4,8 +4,9 @@ import createCache from '@emotion/cache';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme, darkTheme } from 'theme';
 import { Dashboard, Admin } from 'views';
-import { useAreSettingsLoaded, useSettingsSelector } from 'hooks';
+import { useSettingsSelector } from 'hooks';
 import { Routes, Route } from 'react-router-dom';
+import { Loading } from 'components';
 
 export const muiCache = createCache({
   key: 'mui',
@@ -15,20 +16,19 @@ export const muiCache = createCache({
 export const App: FC = () => {
   const themeMode = useSettingsSelector((settings) => settings.themeMode);
 
-  const settingsLoaded = useAreSettingsLoaded();
-
   const theme = themeMode === 'light' ? lightTheme : darkTheme;
 
   return (
     <CacheProvider value={muiCache}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {settingsLoaded && (
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/admin' element={<Admin />} />
-          </Routes>
-        )}
+
+        <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route path='/admin' element={<Admin />} />
+        </Routes>
+
+        <Loading />
       </ThemeProvider>
     </CacheProvider>
   );
