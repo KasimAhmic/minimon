@@ -23,7 +23,11 @@
     "test": "jest",
     "reset": "rimraf ./node_modules ./dist ./coverage"
   },
+  "dependencies": {
+    "big.js": "^6.2.1"
+  },
   "devDependencies": {
+    "@types/big.js": "^6.1.5",
     "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
