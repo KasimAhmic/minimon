@@ -22,37 +22,31 @@
 
 ---
 
-Minimon is a lightweight system monitoring application that allows you to monitor your system vitals in real time.
+Minimon is a lightweight system monitoring application that allows you to monitor your system vitals in real time on any device connected to your local network.
 
-## Overview
+The core idea behind Minimon is that you can breathe new life into any old cellphones, tablets, laptops, etc and use them for something other than taking up space in a land fill. Simply start the server on the computer whose system vitals you wish to monitor, and navigate to that devices IP address on any device on your local network. That's it!
 
-### Minimon Core
+## Screenshots
 
-General purpose package used for storing shared types and constants between the Minimon Server and the Minimon Client.
+<div align="center">
+   <img src="./assets/screenshot_1.png" height="200px" />
+   <img src="./assets/screenshot_2.png" height="200px" />
+   <br />
+   <img src="./assets/screenshot_3.png" height="200px" />
+   <img src="./assets/screenshot_4.png" height="200px" />
+</div>
 
-### Minimon Server
+## System Requirements
 
-Backend system powered by [Nest.js](https://github.com/nestjs/nest) and the fantastic [systeminformation](https://github.com/sebhildebrandt/systeminformation) package that monitors your system vitals and exposes them via a REST API.
+Not enough testing has been done to properly determine the minimum system requirements to run Minimon. Generally speaking, the server should be able to run on any piece of hardware made within the last 10 years without issue. The client has been verified working on hardware as low end as a Raspberry Pi 3 Model B.
 
-### Minimon Client
+Feel free to give Minimnon a shot and let me know how it runs!
 
-Frontend React application that updates in real time and displays your system vitals on a simple dashboard.
+## Getting Started
 
-## Requirements
+To get started with Minimon, please refer the the Wiki. Some useful pages have been listed below:
 
-- [Node.js >= 16.0.0](https://nodejs.org/en/download/)
-- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
-
-## Installation
-
-Minimon is still a work in progress so much work remains on simplifying the installation process. Currently, the only way to run the application is to run it in dev mode. In the future, I hope to compile everything to a single binary that can be easily downloaded and ran, but for now, the steps below will get you started.
-
-1. Clone the repo
-   - `git clone https://github.com/KasimAhmic/minimon.git`
-2. Install dependencies
-   - `yarn run init`
-3. Start Minimon
-   - `yarn start`
-4. Navigate to Minimon
-   - `http://localhost:3000` on the host machine
-   - `http://YOUR_HOST_MACHINE'S_LOCAL_IP:3000` on another device
+- Installation: https://github.com/KasimAhmic/minimon/wiki#installation
+- Customization: https://github.com/KasimAhmic/minimon/wiki#customization
+- Device Configuration: https://github.com/KasimAhmic/minimon/wiki/Device-Configuration
+- Contributing: https://github.com/KasimAhmic/minimon/wiki/Contributing
