@@ -1,5 +1,16 @@
 import { Big } from 'big.js';
 
+// TODO: Investigate if converting to number is a good idea as a loss in precision occurs when converting
+// especially large numbers.
+//
+// Option A: Return Big object. This will maintain the entire feature set we need at the cost of forcing the
+//           use of Big objects everywhere else in the code.
+//
+// Option B: Return a bigint. This will limit the feature set by only allowing integer values with the
+//           benefit of being able to just use the native bigint type everywhere else in the code.
+//
+// Option C: Do nothing. This is certainly the easiest option...
+
 export class ByteUtil {
   static readonly BITS_IN_BYTE = Big('8');
 
@@ -218,7 +229,7 @@ export class ByteUtil {
   }
 
   toBits(): number {
-    return Number(this._bits);
+    return this._bits.toNumber();
   }
 
   toKilobits(): number {
