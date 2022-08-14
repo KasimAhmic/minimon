@@ -95,6 +95,38 @@ export class ByteUtil {
     this._bits = typeof bits === 'number' ? Big(bits) : bits;
   }
 
+  /**
+   * @description Returns the value contained in a `Big` object.
+   * @param value The value to convert
+   * @param returnType The type to convert the value to
+   * @returns The `value` as a `Big` object
+   */
+  private static convert(value: Big, returnType: 'Big'): Big;
+  /**
+   * @description Returns the value as a `bigint`, rounded to the nearest integer.
+   * @param value The value to convert
+   * @param returnType The type to convert the value to
+   * @returns The `value` as a `bigint`
+   */
+  private static convert(value: Big, returnType: 'bigint'): bigint;
+  /**
+   * @description Returns the value as a `number`. Loss of precision is likely to occur with very large numbers.
+   * @param value The value to convert
+   * @param returnType The type to convert the value to
+   * @returns The `value` as a `number`
+   */
+  private static convert(value: Big, returnType: 'number'): number;
+  private static convert(value: Big, returnType: 'Big' | 'bigint' | 'number'): Big | bigint | number {
+    switch (returnType) {
+      case 'Big':
+        return value;
+      case 'bigint':
+        return BigInt(value.round().toString());
+      case 'number':
+        return value.toNumber();
+    }
+  }
+
   static bits(bits: number): ByteUtil {
     return new ByteUtil(Big(bits));
   }
