@@ -22,9 +22,9 @@
 
 ---
 
-Minimon is a lightweight system monitoring application that allows you to monitor your system vitals in real time on any device connected to your local network.
+Minimon is a lightweight system monitoring application that allows you to track your system vitals in real time on any device connected to your local network.
 
-The core idea behind Minimon is that you can breathe new life into any old cellphones, tablets, laptops, etc and use them for something other than taking up space in a land fill. Simply start the server on the computer whose system vitals you wish to monitor, and navigate to that devices IP address on any device on your local network. That's it!
+The core idea behind Minimon is that you can breathe new life into any old cellphones, tablets, laptops, etc. and use them for something other than taking up space in a land fill. Simply start the server on the computer whose system vitals you wish to monitor, and navigate to that device's IP address on any device on your local network. That's it!
 
 ## Screenshots
 
@@ -44,7 +44,7 @@ Feel free to give Minimnon a shot and let me know how it runs!
 
 ## Getting Started
 
-To get started with Minimon, please refer the the Wiki. Some useful pages have been listed below:
+To get started with Minimon, please refer to the Wiki. Some useful pages have been listed below:
 
 - Installation: https://github.com/KasimAhmic/minimon/wiki#installation
 - Customization: https://github.com/KasimAhmic/minimon/wiki#customization
