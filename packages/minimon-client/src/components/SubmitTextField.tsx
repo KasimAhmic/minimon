@@ -37,12 +37,13 @@ export const SubmitTextField: FC<SubmitTextFieldProps> = ({
   const [value, setValue] = useState<string>(initialValue);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid='submitTextField'>
       <TextField
         value={value}
         {...TextFieldProps}
         onChange={(e) => setValue(e.target.value)}
         className={cx(classes.textField, TextFieldProps?.className)}
+        data-testid='submitTextFieldInput'
       />
 
       <Button
@@ -51,6 +52,7 @@ export const SubmitTextField: FC<SubmitTextFieldProps> = ({
         onClick={() => onSubmit(value)}
         className={cx(classes.button, ButtonProps?.className)}
         disableElevation
+        data-testid='submitTextFieldButton'
       >
         <Icon icon='check' />
       </Button>
