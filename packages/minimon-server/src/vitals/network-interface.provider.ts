@@ -1,6 +1,7 @@
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import * as si from 'systeminformation';
 import { Provider } from '@nestjs/common';
+import { ByteUtil } from '@ahmic/minimon-core';
 
 export type DefaultNetworkInterface = {
   name: string;
@@ -16,7 +17,7 @@ export const networkInterfaceProvider: Provider = {
     const defaultInterface = interfaces.find((iface) => iface.iface === defaultInterfaceName);
 
     const name = defaultInterface.ifaceName;
-    const speed = defaultInterface.speed * 1000;
+    const speed = ByteUtil.megabits(defaultInterface.speed).toBytes();
 
     return { name, speed };
   },

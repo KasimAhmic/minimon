@@ -10,6 +10,7 @@ import {
   DebugInfo,
   VitalsData,
   roundFloat,
+  ByteUtil,
 } from '@ahmic/minimon-core';
 import { DEFAULT_NETWORK_INTERFACE } from './vitals.constants';
 import { DefaultNetworkInterface } from './network-interface.provider';
@@ -146,20 +147,18 @@ export class VitalsService {
 
     const network = (await si.networkStats(name))[0];
 
-    const maxSpeedMegabits = speed / 1000;
-
     const uploadBytesPerSecond = network.tx_sec;
     const downloadBytesPerSecond = network.rx_sec;
-    const usagePercentage = (uploadBytesPerSecond + downloadBytesPerSecond) / speed;
+    const usagePercentage = ((uploadBytesPerSecond + downloadBytesPerSecond) / speed) * 100;
 
-    const upload = roundFloat(uploadBytesPerSecond / 1e9);
-    const download = roundFloat(downloadBytesPerSecond / 1e9);
+    const upload = roundFloat(ByteUtil.bytes(uploadBytesPerSecond ?? 0).toMegabits());
+    const download = roundFloat(ByteUtil.bytes(downloadBytesPerSecond ?? 0).toMegabits());
     const usage = roundFloat(usagePercentage);
 
     return {
-      upload: this.createVitals(upload, 0, maxSpeedMegabits, `${upload} Mbps`),
-      download: this.createVitals(download, 0, maxSpeedMegabits, `${download} Mbps`),
-      usage: this.createVitals(usage, 0, maxSpeedMegabits, `${usage}%`),
+      upload: this.createVitals(upload, 0, speed, `${upload} Mbps`),
+      download: this.createVitals(download, 0, speed, `${download} Mbps`),
+      usage: this.createVitals(usage, 0, 100, `${usage}%`),
     };
   }
 }
