@@ -10,6 +10,9 @@ import { Big } from 'big.js';
 //           benefit of being able to just use the native bigint type everywhere else in the code.
 //
 // Option C: Do nothing. This is certainly the easiest option...
+//
+// Option D: Allow the user to pass an argument and choose the return type. Might be tricky in terms of
+//           return types but should be doable.
 
 export class ByteUtil {
   static readonly BITS_IN_BYTE = Big('8');
