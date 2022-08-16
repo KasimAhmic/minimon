@@ -104,9 +104,9 @@ export class VitalsService {
   private async getRamVitals(): Promise<RamVitals> {
     const ram = await si.mem();
 
-    const usedMemory = roundFloat(ram.used / 1e9);
-    const freeMemory = roundFloat(ram.available / 1e9);
-    const totalMemory = roundFloat(ram.total / 1e9);
+    const usedMemory = roundFloat(ByteUtil.bytes(ram.active).toGigabytes());
+    const freeMemory = roundFloat(ByteUtil.bytes(ram.available).toGigabytes());
+    const totalMemory = roundFloat(ByteUtil.bytes(ram.total).toGigabytes());
 
     return {
       usedMemory: this.createVitals(usedMemory, 0, totalMemory, `${usedMemory} GB`),
@@ -120,11 +120,11 @@ export class VitalsService {
     const gpu = controllers[0];
 
     const fanSpeed = gpu?.fanSpeed ?? 0;
-    const memoryTotal = gpu?.memoryTotal ?? 0;
+    const memoryTotal = gpu?.memoryTotal ?? 1;
     const memoryUsed = gpu?.memoryUsed ?? 0;
     const memoryFree = gpu?.memoryFree ?? 0;
     const powerDraw = gpu?.powerDraw ?? 0;
-    const powerLimit = gpu?.powerLimit ?? 0;
+    const powerLimit = gpu?.powerLimit ?? 1;
     const clockCore = gpu?.clockCore ?? 0;
     const clockMemory = gpu?.clockMemory ? gpu.clockMemory / 1000 : 0;
     const temperatureGpu = gpu?.temperatureGpu ?? 0;
@@ -145,6 +145,8 @@ export class VitalsService {
   private async getNetworkVitals(): Promise<NetworkVitals> {
     const { name, speed } = this.defaultNetworkInterface;
 
+    const maxSpeed = ByteUtil.bytes(speed).toMegabits();
+
     const network = (await si.networkStats(name))[0];
 
     const uploadBytesPerSecond = network.tx_sec;
@@ -156,8 +158,8 @@ export class VitalsService {
     const usage = roundFloat(usagePercentage);
 
     return {
-      upload: this.createVitals(upload, 0, speed, `${upload} Mbps`),
-      download: this.createVitals(download, 0, speed, `${download} Mbps`),
+      upload: this.createVitals(upload, 0, maxSpeed, `${upload} Mbps`),
+      download: this.createVitals(download, 0, maxSpeed, `${download} Mbps`),
       usage: this.createVitals(usage, 0, 100, `${usage}%`),
     };
   }
