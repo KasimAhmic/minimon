@@ -29,11 +29,11 @@ The core idea behind Minimon is that you can breathe new life into any old cellp
 ## Screenshots
 
 <div align="center">
-   <img src="./assets/screenshot_1.png" height="200px" />
-   <img src="./assets/screenshot_2.png" height="200px" />
+   <img src="assets/screenshots/screenshot_1.png" alt="Light mode, blue theme" height="200px" />
+   <img src="assets/screenshots/screenshot_2.png" alt="Dark mode, blue theme" height="200px" />
    <br />
-   <img src="./assets/screenshot_3.png" height="200px" />
-   <img src="./assets/screenshot_4.png" height="200px" />
+   <img src="assets/screenshots/screenshot_3.png" alt="Light mode, green theme" height="200px" />
+   <img src="assets/screenshots/screenshot_4.png" alt="Dark mode, green theme" height="200px" />
 </div>
 
 ## System Requirements
