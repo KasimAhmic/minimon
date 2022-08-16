@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CircularProgress, Typography } from '@mui/material';
-import { useRescaledValue } from 'hooks';
+import { useRescaledValue, useSettingsSelector } from 'hooks';
 import { SystemVitalType } from '@ahmic/minimon-core';
-
-const size = 230;
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -13,8 +11,9 @@ const useStyles = makeStyles()((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    width: size,
-    height: size,
+    width: '100%',
+    height: '100%',
+    paddingTop: theme.spacing(2),
     background: theme.palette.background.default,
     borderRadius: '50%',
   },
@@ -39,7 +38,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   label: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(0.25),
     fontSize: 32,
   },
 }));
@@ -59,6 +58,11 @@ export const Dial: FC<DialProps> = ({ label, vital, property }) => {
     (vitals) => vitals[vital][property as keyof typeof vitals[typeof vital]],
   );
 
+  const rows = useSettingsSelector((settings) => settings.layout.rows);
+  const columns = useSettingsSelector((settings) => settings.layout.columns);
+
+  const size = Math.min(window.innerHeight / rows, window.innerWidth / columns);
+
   return (
     <div className={classes.root}>
       <div className={classes.progressContainer}>
@@ -74,8 +78,8 @@ export const Dial: FC<DialProps> = ({ label, vital, property }) => {
         />
         <CircularProgress
           variant='determinate'
-          value={rescaledValue}
           size={size}
+          value={rescaledValue}
           thickness={10}
           className={classes.progress}
         />

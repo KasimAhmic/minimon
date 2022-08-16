@@ -16,7 +16,7 @@ const useStyles = makeStyles<ThemeProps>()((theme, { columns, rows }) => ({
     gridTemplateRows: `repeat(${rows}, 1fr)`,
     gap: theme.spacing(1),
     width: '100%',
-    padding: theme.spacing(2),
+    height: '100%',
     boxSizing: 'border-box',
   },
   widgetWrapper: {
