@@ -1,17 +1,5 @@
 import React, { FC } from 'react';
-import {
-  Button,
-  ButtonGroup,
-  Divider,
-  Paper,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Button, ButtonGroup, FormControlLabel, Paper, Switch, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Header } from 'components/Header';
 import { makeStyles } from 'tss-react/mui';
@@ -27,37 +15,66 @@ export const useStyles = makeStyles()((theme) => ({
     height: `calc(100% - ${headerHeight}px)`,
     marginTop: headerHeight,
     padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.paper,
   },
   paper: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     gap: theme.spacing(1),
     width: '100%',
     height: '100%',
-    padding: theme.spacing(1),
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.palette.divider,
+    backgroundColor: theme.palette.background.default,
     overflowY: 'auto',
   },
-  wrapper: {
+  header: {
+    padding: theme.spacing(2),
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.divider,
+    backgroundColor: theme.palette.background.paper,
+  },
+  title: {
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  section: {
+    padding: theme.spacing(2),
+  },
+  settings: {
+    marginTop: theme.spacing(1),
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.palette.divider,
+    borderRadius: (theme.shape.borderRadius as number) * 2,
+    backgroundColor: theme.palette.background.paper,
+  },
+  setting: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 250px',
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.divider,
+    '&:last-of-type': {
+      borderBottomWidth: 0,
+    },
+  },
+  settingInformation: {
+    padding: theme.spacing(2),
+  },
+  settingTitle: {
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  settingControl: {
     display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    gap: theme.spacing(1),
-    width: '100%',
-    marginBottom: theme.spacing(2),
-  },
-  actions: {
-    width: '25%',
-  },
-  fitCell: {
-    whiteSpace: 'nowrap',
-  },
-  buttonGroup: {
-    width: '100%',
+    alignItems: 'center',
+    padding: theme.spacing(2),
   },
 }));
 
 export const Admin: FC = () => {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
 
   const settings = useSettingsSelector((settings) => settings);
 
@@ -69,128 +86,238 @@ export const Admin: FC = () => {
     <div className={classes.root}>
       <Header />
 
-      <Paper className={classes.paper}>
-        <div className={cx(classes.wrapper, classes.actions)}>
-          <Typography variant='h5'>Actions</Typography>
+      <Paper elevation={4} className={classes.paper}>
+        <div className={classes.header}>
+          <Typography variant='h4' className={classes.title}>
+            Settings
+          </Typography>
 
-          <Divider />
-
-          <LoadingButton
-            variant='contained'
-            color='primary'
-            onClick={() => reloadClients()}
-            loading={isReloadClientsLoading}
-          >
-            Reload all clients
-          </LoadingButton>
-
-          <LoadingButton
-            variant='contained'
-            color='error'
-            onClick={() => resetSettings()}
-            loading={isResetSettingsLoading}
-          >
-            Reset settings
-          </LoadingButton>
+          <Typography>
+            You can tweak various settings for Minimon below. All changes will be applied immediatley
+          </Typography>
         </div>
 
-        <div className={classes.wrapper}>
-          <Typography variant='h5'>Settings</Typography>
+        <section className={classes.section}>
+          <Typography variant='h5'>General</Typography>
 
-          <Divider />
-
-          <Table size='small'>
-            <TableHead>
-              <TableRow>
-                <TableCell>Setting</TableCell>
-                <TableCell>Control</TableCell>
-                <TableCell>Description</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell className={classes.fitCell}>Click to Reload</TableCell>
-                <TableCell>
-                  <Switch
-                    checked={settings.clickToReload}
-                    onChange={(e) => updateSettings({ clickToReload: e.target.checked })}
-                    disabled={isUpdateSettingsLoading}
-                  />
-                </TableCell>
-                <TableCell>
+          <div className={classes.settings}>
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Click to Reload</Typography>
+                <Typography variant='body2'>
                   Enables clicking/tapping anywhere on the Dashboard screen to reload the page. Useful for
                   devices where you might not constantly have keyboard and mouse access to.
-                </TableCell>
-              </TableRow>
+                </Typography>
+              </div>
 
-              <TableRow>
-                <TableCell className={classes.fitCell}>Vitals Polling Interval</TableCell>
-                <TableCell>
-                  <SubmitTextField
-                    initialValue={settings.pollingInterval.toString()}
-                    onSubmit={(value) => updateSettings({ pollingInterval: parseInt(value) })}
-                    TextFieldProps={{
-                      label: 'Milliseconds',
-                      size: 'small',
-                      type: 'number',
-                      disabled: isUpdateSettingsLoading,
-                    }}
-                    ButtonProps={{
-                      size: 'small',
-                      disabled: isUpdateSettingsLoading,
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
+              <div className={classes.settingControl}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={settings.clickToReload}
+                      onChange={(e) => updateSettings({ clickToReload: e.target.checked })}
+                      disabled={isUpdateSettingsLoading}
+                    />
+                  }
+                  label={settings.clickToReload ? 'Enabled' : 'Disabled'}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Vitals Polling Interval</Typography>
+                <Typography variant='body2'>
                   The frequency at which the Minimon server polls for hardware updates. Note that you
                   shouldn't set this value lower than it takes to retrieve all the vitals. You can see the
                   various timings by enabling the debug screen below.
-                </TableCell>
-              </TableRow>
+                </Typography>
+              </div>
 
-              <TableRow>
-                <TableCell className={classes.fitCell}>Theme Mode</TableCell>
-                <TableCell>
-                  <ButtonGroup className={classes.buttonGroup}>
-                    <Button
-                      disabled={settings.themeMode === ThemeMode.LIGHT || isUpdateSettingsLoading}
-                      onClick={() => updateSettings({ themeMode: ThemeMode.LIGHT })}
-                      className={classes.buttonGroup}
-                    >
-                      Light
-                    </Button>
-                    <Button
-                      disabled={settings.themeMode === ThemeMode.DARK || isUpdateSettingsLoading}
-                      onClick={() => updateSettings({ themeMode: ThemeMode.DARK })}
-                      className={classes.buttonGroup}
-                    >
-                      Dark
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
-                <TableCell>
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue={settings.pollingInterval.toString()}
+                  onSubmit={(value) => updateSettings({ pollingInterval: parseInt(value) })}
+                  TextFieldProps={{
+                    label: 'Milliseconds',
+                    size: 'small',
+                    type: 'number',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Theme Mode</Typography>
+                <Typography variant='body2'>
                   Color mode of the current Minimon Client theme. Note that this will change the Admin theme
                   as well as the Dashboard theme.
-                </TableCell>
-              </TableRow>
+                </Typography>
+              </div>
 
-              <TableRow>
-                <TableCell className={classes.fitCell}>Show Debug Screen</TableCell>
-                <TableCell>
-                  <Switch
-                    checked={settings.showDebugScreen}
-                    onChange={(e) => updateSettings({ showDebugScreen: e.target.checked })}
-                    disabled={isUpdateSettingsLoading}
-                  />
-                </TableCell>
-                <TableCell>
+              <div className={classes.settingControl}>
+                <ButtonGroup fullWidth>
+                  <Button
+                    fullWidth
+                    disabled={settings.themeMode === ThemeMode.LIGHT || isUpdateSettingsLoading}
+                    onClick={() => updateSettings({ themeMode: ThemeMode.LIGHT })}
+                  >
+                    Light
+                  </Button>
+                  <Button
+                    fullWidth
+                    disabled={settings.themeMode === ThemeMode.DARK || isUpdateSettingsLoading}
+                    onClick={() => updateSettings({ themeMode: ThemeMode.DARK })}
+                  >
+                    Dark
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Show Debug Screen</Typography>
+                <Typography variant='body2'>
                   Displays the debug screen on the Dashboard screen with some useful information including
-                  incoming messages and timings for system statistic calculations
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
+                  incoming messages and timings for system statistic calculations.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={settings.showDebugScreen}
+                      onChange={(e) => updateSettings({ showDebugScreen: e.target.checked })}
+                      disabled={isUpdateSettingsLoading}
+                    />
+                  }
+                  label={settings.showDebugScreen ? 'Enabled' : 'Disabled'}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={classes.section}>
+          <Typography variant='h5'>Layout</Typography>
+
+          <div className={classes.settings}>
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Columns</Typography>
+                <Typography variant='body2'>The number of columns to display on Minimon.</Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue={settings.layout.columns.toString()}
+                  // @ts-ignore
+                  onSubmit={(value) => updateSettings({ layout: { columns: parseInt(value) } })}
+                  TextFieldProps={{
+                    label: 'Columns',
+                    size: 'small',
+                    type: 'number',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Rows</Typography>
+                <Typography variant='body2'>The number of rows to display on Minimon.</Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue={settings.layout.rows.toString()}
+                  // @ts-ignore
+                  onSubmit={(value) => updateSettings({ layout: { rows: parseInt(value) } })}
+                  TextFieldProps={{
+                    label: 'Rows',
+                    size: 'small',
+                    type: 'number',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Widgets</Typography>
+                <Typography variant='body2'>The widgets to show on Minimon.</Typography>
+              </div>
+
+              <div className={classes.settingControl}></div>
+            </div>
+          </div>
+        </section>
+
+        <section className={classes.section}>
+          <Typography variant='h5'>Actions</Typography>
+
+          <div className={classes.settings}>
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Reload All Clients</Typography>
+                <Typography variant='body2'>
+                  Emits a reload to all clients forcing them to reload the page.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <LoadingButton
+                  variant='contained'
+                  color='primary'
+                  fullWidth
+                  onClick={() => reloadClients()}
+                  loading={isReloadClientsLoading}
+                >
+                  Reload all clients
+                </LoadingButton>
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Reset Settings</Typography>
+                <Typography variant='body2'>
+                  Resets all the settings on this page to their factory defaults. This cannot be undone.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <LoadingButton
+                  variant='contained'
+                  color='error'
+                  fullWidth
+                  onClick={() => resetSettings()}
+                  loading={isResetSettingsLoading}
+                >
+                  Reset settings
+                </LoadingButton>
+              </div>
+            </div>
+          </div>
+        </section>
       </Paper>
     </div>
   );
