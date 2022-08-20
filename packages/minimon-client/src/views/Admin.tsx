@@ -40,6 +40,9 @@ export const useStyles = makeStyles()((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
   },
   section: {
+    width: '100%',
+    maxWidth: 1000,
+    margin: '0 auto',
     padding: theme.spacing(2),
   },
   settings: {
@@ -266,7 +269,169 @@ export const Admin: FC = () => {
                 <Typography variant='body2'>The widgets to show on Minimon.</Typography>
               </div>
 
-              <div className={classes.settingControl}></div>
+              <div className={classes.settingControl}>
+                <Button variant='contained' fullWidth>
+                  Unimplemented
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={classes.section}>
+          <Typography variant='h5'>Theme</Typography>
+
+          <div className={classes.settings}>
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Background Color</Typography>
+                <Typography variant='body2'>Sets the background color of the Minimon dashboard.</Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='Unimplemented'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Color',
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Dial Color</Typography>
+                <Typography variant='body2'>Sets the color of the dials on the Minimon dashboard.</Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='Unimplemented'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Color',
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Dial Label Font Color</Typography>
+                <Typography variant='body2'>
+                  Sets the font color of the dial label. The dial label is the text that appears at the bottom
+                  of the dial.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='Unimplemented'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Color',
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Dial Label Font Size</Typography>
+                <Typography variant='body2'>
+                  Sets the font size of the dial label. The dial label is the text that appears at the bottom
+                  of the dial.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='0'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Size (px)',
+                    size: 'small',
+                    type: 'number',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Dial Value Font Color</Typography>
+                <Typography variant='body2'>
+                  Sets the font color of the dial value. The dial value is the text that appears in the center
+                  of the dial.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='Unimplemented'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Color',
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={classes.setting}>
+              <div className={classes.settingInformation}>
+                <Typography className={classes.settingTitle}>Dial Value Font Size</Typography>
+                <Typography variant='body2'>
+                  Sets the font size of the dial value. The dial value is the text that appears in the center
+                  of the dial.
+                </Typography>
+              </div>
+
+              <div className={classes.settingControl}>
+                <SubmitTextField
+                  initialValue='0'
+                  onSubmit={(value) => console.log(value)}
+                  TextFieldProps={{
+                    label: 'Size (px)',
+                    size: 'small',
+                    type: 'number',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                  ButtonProps={{
+                    size: 'small',
+                    disabled: isUpdateSettingsLoading,
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
