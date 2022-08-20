@@ -1,5 +1,4 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
@@ -18,10 +17,8 @@ async function bootstrap() {
     }),
   );
 
-  const configService = app.get(ConfigService);
-
-  const host = configService.get('HOST');
-  const port = configService.get('PORT');
+  const host = process.env.NODE_ENV === 'development' ? 'localhost' : '0.0.0.0';
+  const port = process.env.NODE_ENV === 'development' ? 3001 : 8080;
 
   process.on('warning', (e) => logger.warn(e.stack));
 
