@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, ButtonProps, TextField, TextFieldProps } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { Icon } from './Icon';
@@ -38,6 +38,8 @@ export const SubmitTextField: FC<SubmitTextFieldProps> = ({
   const { cx, classes } = useStyles();
 
   const [value, setValue] = useState<string>(initialValue);
+
+  useEffect(() => setValue(initialValue), [initialValue]);
 
   return (
     <div className={classes.root} data-testid='submitTextField'>
