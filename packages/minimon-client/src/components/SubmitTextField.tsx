@@ -16,9 +16,6 @@ const useStyles = makeStyles()((theme) => ({
   button: {
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    '& span': {
-      color: theme.palette.common.white,
-    },
   },
 }));
 

@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 interface StyleProps {
-  color: IconColor;
+  color?: IconColor;
   iconSize: number;
 }
 
 const useStyles = makeStyles<StyleProps>()((theme, { color, iconSize }) => ({
   root: {
-    color: theme.palette[color].main,
+    color: color && theme.palette[color].main,
     fontSize: iconSize,
   },
 }));
@@ -34,7 +34,7 @@ const muiIconClasses = {
 
 export const Icon: FC<IconProps> = ({
   icon,
-  color = 'primary',
+  color,
   size = 'medium',
   sizeMap = {
     small: 16,

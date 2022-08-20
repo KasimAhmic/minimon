@@ -44,7 +44,7 @@ export const lightTheme = createTheme(
       mode: 'light',
       background: {
         paper: '#ffffff',
-        default: '#fbfbfb',
+        default: '#fafafa',
       },
     },
   },
