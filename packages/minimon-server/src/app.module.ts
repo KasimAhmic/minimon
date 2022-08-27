@@ -2,7 +2,7 @@ import { Logger, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { MinimonConfigSchema } from './common/config.schema';
+import { configLoader } from './common/config.schema';
 import * as si from 'systeminformation';
 import { VitalsModule } from './vitals/vitals.module';
 import { platform } from 'node:os';
@@ -15,7 +15,7 @@ import { CLIENT_DIR } from './app.constants';
   imports: [
     ConfigModule.forRoot({
       cache: true,
-      validationSchema: MinimonConfigSchema,
+      load: [configLoader],
     }),
     ServeStaticModule.forRoot({
       rootPath: CLIENT_DIR,
