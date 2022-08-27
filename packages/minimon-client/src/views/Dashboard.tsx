@@ -37,7 +37,7 @@ export const Dashboard: FC = () => {
 
   return (
     <div className={classes.root} ref={rootRef}>
-      {layout.widgets.map((widget, index) => (
+      {layout.widgets.slice(0, layout.columns * layout.rows).map((widget, index) => (
         <div key={widget?.label ?? `null-${index}`} className={classes.widgetWrapper}>
           {widget && (
             <Dial key={widget.label} label={widget.label} vital={widget.vital} property={widget.property} />

@@ -1,6 +1,9 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
 const baseThemeOptions: ThemeOptions = {
+  shape: {
+    borderRadius: 5,
+  },
   palette: {
     primary: {
       light: '#1976d2',
@@ -39,6 +42,10 @@ export const lightTheme = createTheme(
   {
     palette: {
       mode: 'light',
+      background: {
+        paper: '#ffffff',
+        default: '#fafafa',
+      },
     },
   },
   baseThemeOptions,

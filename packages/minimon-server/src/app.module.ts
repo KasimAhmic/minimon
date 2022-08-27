@@ -33,8 +33,6 @@ import { CLIENT_DIR } from './app.constants';
     VitalsModule,
     SettingsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule implements OnApplicationShutdown {
   private readonly logger = new Logger(AppModule.name);

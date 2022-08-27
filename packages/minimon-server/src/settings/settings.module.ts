@@ -3,9 +3,8 @@ import { EventsModule } from '../events/events.module';
 import { SettingsController } from './settings.controller';
 import { SettingsService } from './settings.service';
 import { PersistenceModule } from '../persistence/persistence.module';
-import { defaultSettings, Settings, ThemeMode } from '@ahmic/minimon-core';
-import { SETTINGS_FILE } from './settings.constants';
-import Joi from 'joi';
+import { defaultSettings, Settings } from '@ahmic/minimon-core';
+import { settingsValidationSchema, SETTINGS_FILE } from './settings.constants';
 
 @Module({
   imports: [
@@ -15,14 +14,7 @@ import Joi from 'joi';
       createFileIfNonExistant: true,
       defaultFileContents: JSON.stringify(defaultSettings, null, 2),
       validateFile: true,
-      validationSchema: Joi.object<Settings, true>({
-        clickToReload: Joi.boolean(),
-        showDebugScreen: Joi.boolean(),
-        themeMode: Joi.string().valid(...Object.values(ThemeMode)),
-        pollingInterval: Joi.number(),
-        // TODO: Enhance this
-        layout: Joi.object(),
-      }),
+      validationSchema: settingsValidationSchema,
       fileId: SETTINGS_FILE,
     }),
   ],
