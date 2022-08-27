@@ -104,5 +104,8 @@ build
 # TernJS port file
 .tern-port
 
+# OS Stuff
+.DS_Store
+
 # Minimon
 settings.json
