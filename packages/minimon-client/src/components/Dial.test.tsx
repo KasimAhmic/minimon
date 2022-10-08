@@ -7,7 +7,7 @@ const mockUseRescaledValue = jest.fn();
 jest.mock('hooks', () => ({
   ...jest.requireActual('hooks'),
   useRescaledValue: () => mockUseRescaledValue(),
-  useSettingsSelector: (cb: Function) => jest.fn((cb) => cb({ layout: { rows: 2, columns: 3 } })),
+  useSettingsSelector: (cb: Function) => jest.fn((cb) => cb({ layout: { rows: 2, columns: 3 }, theme: {} })),
 }));
 
 describe('Dial', () => {
