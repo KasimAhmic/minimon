@@ -6,7 +6,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { INTERVAL_UPDATED, SETTINGS_FILE } from './settings.constants';
 import { ReloadEvent } from './reload.event';
 import { PersistenceService } from '../persistence/persistence.service';
-import merge from 'lodash.merge';
+import merge from 'safe-merge';
 
 @Injectable()
 export class SettingsService {
