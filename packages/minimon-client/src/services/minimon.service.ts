@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 import { ISettingsEvent, IVitalsEvent, Settings, SystemVitals } from '@ahmic/minimon-core';
 import { minimonStream } from './minimon.stream';
+import { DeepPartial } from '@reduxjs/toolkit';
 
 export const baseUrl = '/api';
 
@@ -78,7 +79,7 @@ export type VitalsArgs = void;
 export type GetSettingsResponse = Settings;
 export type GetSettingsArgs = void;
 export type UpdateSettingsResponse = Settings;
-export type UpdateSettingsArgs = Partial<Settings>;
+export type UpdateSettingsArgs = DeepPartial<Settings>;
 export type ResetSettingsResponse = void;
 export type ResetSettingsArgs = void;
 export type ReloadClientsResponse = void;
