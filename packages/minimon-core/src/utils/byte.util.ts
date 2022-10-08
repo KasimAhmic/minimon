@@ -1,19 +1,5 @@
 import { Big } from 'big.js';
 
-// TODO: Investigate if converting to number is a good idea as a loss in precision occurs when converting
-// especially large numbers.
-//
-// Option A: Return Big object. This will maintain the entire feature set we need at the cost of forcing the
-//           use of Big objects everywhere else in the code.
-//
-// Option B: Return a bigint. This will limit the feature set by only allowing integer values with the
-//           benefit of being able to just use the native bigint type everywhere else in the code.
-//
-// Option C: Do nothing. This is certainly the easiest option...
-//
-// Option D: Allow the user to pass an argument and choose the return type. Might be tricky in terms of
-//           return types but should be doable.
-
 export class ByteUtil {
   static readonly BITS_IN_BYTE = Big('8');
 
@@ -94,38 +80,6 @@ export class ByteUtil {
   constructor(bits: number | Big) {
     this._bits = typeof bits === 'number' ? Big(bits) : bits;
   }
-
-  /**
-   * @description Returns the value contained in a `Big` object.
-   * @param value The value to convert
-   * @param returnType The type to convert the value to
-   * @returns The `value` as a `Big` object
-   */
-  // private static convert(value: Big, returnType: 'Big'): Big;
-  /**
-   * @description Returns the value as a `bigint`, rounded to the nearest integer.
-   * @param value The value to convert
-   * @param returnType The type to convert the value to
-   * @returns The `value` as a `bigint`
-   */
-  // private static convert(value: Big, returnType: 'bigint'): bigint;
-  /**
-   * @description Returns the value as a `number`. Loss of precision is likely to occur with very large numbers.
-   * @param value The value to convert
-   * @param returnType The type to convert the value to
-   * @returns The `value` as a `number`
-   */
-  // private static convert(value: Big, returnType: 'number'): number;
-  // private static convert(value: Big, returnType: 'Big' | 'bigint' | 'number'): Big | bigint | number {
-  //   switch (returnType) {
-  //     case 'Big':
-  //       return value;
-  //     case 'bigint':
-  //       return BigInt(value.round().toString());
-  //     case 'number':
-  //       return value.toNumber();
-  //   }
-  // }
 
   static bits(bits: number): ByteUtil {
     return new ByteUtil(Big(bits));
