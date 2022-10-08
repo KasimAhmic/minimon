@@ -26,7 +26,7 @@ export const useStyles = makeStyles()((theme) => ({
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: theme.palette.divider,
-    backgroundColor: theme.palette.background.default,
+    background: theme.palette.background.default,
     overflowY: 'auto',
   },
   header: {
@@ -44,6 +44,16 @@ export const useStyles = makeStyles()((theme) => ({
     maxWidth: 1000,
     margin: '0 auto',
     padding: theme.spacing(2),
+  },
+  sectionTitle: {
+    position: 'sticky',
+    top: 0,
+    padding: theme.spacing(1),
+    background: theme.palette.background.default,
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.divider,
+    zIndex: theme.zIndex.tooltip,
   },
   settings: {
     marginTop: theme.spacing(1),
@@ -101,7 +111,9 @@ export const Admin: FC = () => {
         </div>
 
         <section className={classes.section}>
-          <Typography variant='h5'>General</Typography>
+          <Typography variant='h5' className={classes.sectionTitle}>
+            General
+          </Typography>
 
           <div className={classes.settings}>
             <div className={classes.setting}>
@@ -210,7 +222,9 @@ export const Admin: FC = () => {
         </section>
 
         <section className={classes.section}>
-          <Typography variant='h5'>Layout</Typography>
+          <Typography variant='h5' className={classes.sectionTitle}>
+            Layout
+          </Typography>
 
           <div className={classes.settings}>
             <div className={classes.setting}>
@@ -279,7 +293,9 @@ export const Admin: FC = () => {
         </section>
 
         <section className={classes.section}>
-          <Typography variant='h5'>Theme</Typography>
+          <Typography variant='h5' className={classes.sectionTitle}>
+            Theme
+          </Typography>
 
           <div className={classes.settings}>
             <div className={classes.setting}>
@@ -437,7 +453,9 @@ export const Admin: FC = () => {
         </section>
 
         <section className={classes.section}>
-          <Typography variant='h5'>Actions</Typography>
+          <Typography variant='h5' className={classes.sectionTitle}>
+            Actions
+          </Typography>
 
           <div className={classes.settings}>
             <div className={classes.setting}>

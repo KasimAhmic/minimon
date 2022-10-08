@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Toolbar, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import MinimonIcon from '../assets/minimon_flat_128.png';
 import GitHubIcon from '../assets/github.png';
-import { Icon } from './Icon';
 
 const useStyles = makeStyles()((theme) => ({
   toolbar: {
