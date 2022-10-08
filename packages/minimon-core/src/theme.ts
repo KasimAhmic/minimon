@@ -1,4 +1,4 @@
-interface Colors {
+export interface MinimonTheme {
   backgroundColor: string;
   dialColor: string;
   dialLabelFontColor: string;
@@ -7,6 +7,11 @@ interface Colors {
   dialValueFontSize: string;
 }
 
-export interface MinimonTheme {
-  colors: Colors;
-}
+export const defaultTheme: MinimonTheme = {
+  backgroundColor: '',
+  dialColor: '',
+  dialLabelFontColor: '',
+  dialLabelFontSize: '',
+  dialValueFontColor: '',
+  dialValueFontSize: '',
+};
