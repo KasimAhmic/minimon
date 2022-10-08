@@ -2,9 +2,14 @@ import React, { FC } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CircularProgress, Typography } from '@mui/material';
 import { useRescaledValue, useSettingsSelector } from 'hooks';
-import { SystemVitalType } from '@ahmic/minimon-core';
+import { MinimonTheme, SystemVitalType } from '@ahmic/minimon-core';
 
-const useStyles = makeStyles()((theme) => ({
+interface StyleProps {
+  themeOverrides: MinimonTheme;
+  size: number;
+}
+
+const useStyles = makeStyles<StyleProps>()((theme, { themeOverrides, size }) => ({
   root: {
     position: 'relative',
     display: 'flex',
@@ -13,9 +18,6 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'column',
     width: '100%',
     height: '100%',
-    paddingTop: theme.spacing(2),
-    background: theme.palette.background.default,
-    borderRadius: '50%',
   },
   progressContainer: {
     position: 'absolute',
@@ -32,14 +34,23 @@ const useStyles = makeStyles()((theme) => ({
   progressBackground: {
     color: theme.palette.divider,
   },
+  valueBackground: {
+    color: themeOverrides?.dialColor ? themeOverrides.dialColor : theme.palette.primary.main,
+  },
   value: {
     transform: 'rotateZ(125deg)',
-    fontSize: 24,
+    fontSize: themeOverrides?.dialValueFontSize ? parseInt(themeOverrides.dialValueFontSize) : 24,
+    color: themeOverrides?.dialValueFontColor
+      ? themeOverrides.dialValueFontColor
+      : theme.palette.text.primary,
   },
   label: {
     position: 'absolute',
     bottom: theme.spacing(0.25),
-    fontSize: 32,
+    fontSize: themeOverrides?.dialLabelFontSize ? parseInt(themeOverrides.dialLabelFontSize) : 32,
+    color: themeOverrides?.dialLabelFontColor
+      ? themeOverrides.dialLabelFontColor
+      : theme.palette.text.primary,
   },
 }));
 
@@ -50,8 +61,6 @@ export interface DialProps {
 }
 
 export const Dial: FC<DialProps> = ({ label, vital, property }) => {
-  const { classes } = useStyles();
-
   const { rescaledValue, valueLabel } = useRescaledValue(
     // TODO: This type cast _should_ be safe since this type is validated in Core. When
     // user input is enabled, we _may_ need to revalidate it.
@@ -60,8 +69,11 @@ export const Dial: FC<DialProps> = ({ label, vital, property }) => {
 
   const rows = useSettingsSelector((settings) => settings.layout.rows);
   const columns = useSettingsSelector((settings) => settings.layout.columns);
+  const themeOverrides = useSettingsSelector((settings) => settings.theme);
 
   const size = Math.min(window.innerHeight / rows, window.innerWidth / columns);
+
+  const { classes } = useStyles({ themeOverrides: themeOverrides ?? {}, size });
 
   return (
     <div className={classes.root}>
@@ -82,6 +94,9 @@ export const Dial: FC<DialProps> = ({ label, vital, property }) => {
           value={rescaledValue}
           thickness={10}
           className={classes.progress}
+          classes={{
+            circle: classes.valueBackground,
+          }}
         />
 
         <Typography className={classes.value} variant='h4'>

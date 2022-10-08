@@ -236,7 +236,6 @@ export const Admin: FC = () => {
               <div className={classes.settingControl}>
                 <SubmitTextField
                   initialValue={settings.layout.columns.toString()}
-                  // @ts-ignore
                   onSubmit={(value) => updateSettings({ layout: { columns: parseInt(value) } })}
                   TextFieldProps={{
                     label: 'Columns',
@@ -261,7 +260,6 @@ export const Admin: FC = () => {
               <div className={classes.settingControl}>
                 <SubmitTextField
                   initialValue={settings.layout.rows.toString()}
-                  // @ts-ignore
                   onSubmit={(value) => updateSettings({ layout: { rows: parseInt(value) } })}
                   TextFieldProps={{
                     label: 'Rows',
@@ -294,7 +292,7 @@ export const Admin: FC = () => {
 
         <section className={classes.section}>
           <Typography variant='h5' className={classes.sectionTitle}>
-            Theme
+            Theme Overrides
           </Typography>
 
           <div className={classes.settings}>
@@ -306,8 +304,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='Unimplemented'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.backgroundColor}
+                  onSubmit={(backgroundColor) => updateSettings({ theme: { backgroundColor } })}
                   TextFieldProps={{
                     label: 'Color',
                     size: 'small',
@@ -329,8 +327,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='Unimplemented'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.dialColor}
+                  onSubmit={(dialColor) => updateSettings({ theme: { dialColor } })}
                   TextFieldProps={{
                     label: 'Color',
                     size: 'small',
@@ -355,8 +353,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='Unimplemented'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.dialLabelFontColor}
+                  onSubmit={(dialLabelFontColor) => updateSettings({ theme: { dialLabelFontColor } })}
                   TextFieldProps={{
                     label: 'Color',
                     size: 'small',
@@ -381,8 +379,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='0'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.dialLabelFontSize}
+                  onSubmit={(dialLabelFontSize) => updateSettings({ theme: { dialLabelFontSize } })}
                   TextFieldProps={{
                     label: 'Size (px)',
                     size: 'small',
@@ -408,8 +406,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='Unimplemented'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.dialValueFontColor}
+                  onSubmit={(dialValueFontColor) => updateSettings({ theme: { dialValueFontColor } })}
                   TextFieldProps={{
                     label: 'Color',
                     size: 'small',
@@ -434,8 +432,8 @@ export const Admin: FC = () => {
 
               <div className={classes.settingControl}>
                 <SubmitTextField
-                  initialValue='0'
-                  onSubmit={(value) => console.log(value)}
+                  initialValue={settings.theme.dialValueFontSize}
+                  onSubmit={(dialValueFontSize) => updateSettings({ theme: { dialValueFontSize } })}
                   TextFieldProps={{
                     label: 'Size (px)',
                     size: 'small',
