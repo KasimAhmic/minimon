@@ -1,4 +1,4 @@
-import { Layout, Settings, ThemeMode, Widget } from '@ahmic/minimon-core';
+import { Layout, MinimonTheme, Settings, ThemeMode, Widget } from '@ahmic/minimon-core';
 import Joi from 'joi';
 
 export const INTERVAL_UPDATED = 'settings.intervalUpdated';
@@ -26,5 +26,15 @@ export const settingsValidationSchema = Joi.object<Settings, true>({
         property: Joi.string(),
       }),
     ),
+  }),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  theme: Joi.object<MinimonTheme, true>({
+    backgroundColor: Joi.string().min(0),
+    dialColor: Joi.string().min(0),
+    dialLabelFontColor: Joi.string().min(0),
+    dialLabelFontSize: Joi.string().min(0),
+    dialValueFontColor: Joi.string().min(0),
+    dialValueFontSize: Joi.string().min(0),
   }),
 });

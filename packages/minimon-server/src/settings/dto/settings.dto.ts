@@ -1,4 +1,4 @@
-import { Layout, Settings, ThemeMode } from '@ahmic/minimon-core';
+import { Layout, MinimonTheme, Settings, ThemeMode } from '@ahmic/minimon-core';
 import { IsBoolean, IsEnum, IsInt, IsObject, IsPositive } from 'class-validator';
 
 export class SettingsDto implements Settings {
@@ -18,4 +18,8 @@ export class SettingsDto implements Settings {
   // TODO: Enhance this
   @IsObject()
   layout: Layout;
+
+  // TODO: Enhance this
+  @IsObject()
+  theme: MinimonTheme;
 }
