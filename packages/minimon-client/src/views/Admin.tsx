@@ -65,12 +65,14 @@ export const useStyles = makeStyles()((theme) => ({
   },
   setting: {
     display: 'grid',
-    gridTemplateColumns: '1fr 250px',
     borderBottomWidth: 1,
     borderBottomStyle: 'solid',
     borderBottomColor: theme.palette.divider,
     '&:last-of-type': {
       borderBottomWidth: 0,
+    },
+    [theme.breakpoints.up('sm')]: {
+      gridTemplateColumns: '1fr 250px',
     },
   },
   settingInformation: {
@@ -158,6 +160,7 @@ export const Admin: FC = () => {
                     size: 'small',
                     type: 'number',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -242,6 +245,7 @@ export const Admin: FC = () => {
                     size: 'small',
                     type: 'number',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -266,6 +270,7 @@ export const Admin: FC = () => {
                     size: 'small',
                     type: 'number',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -310,6 +315,7 @@ export const Admin: FC = () => {
                     label: 'Color',
                     size: 'small',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -333,6 +339,7 @@ export const Admin: FC = () => {
                     label: 'Color',
                     size: 'small',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -359,6 +366,7 @@ export const Admin: FC = () => {
                     label: 'Color',
                     size: 'small',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -386,6 +394,7 @@ export const Admin: FC = () => {
                     size: 'small',
                     type: 'number',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -412,6 +421,7 @@ export const Admin: FC = () => {
                     label: 'Color',
                     size: 'small',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',
@@ -439,6 +449,7 @@ export const Admin: FC = () => {
                     size: 'small',
                     type: 'number',
                     disabled: isUpdateSettingsLoading,
+                    fullWidth: true,
                   }}
                   ButtonProps={{
                     size: 'small',

@@ -6,6 +6,7 @@ import { Icon } from './Icon';
 const useStyles = makeStyles()((theme) => ({
   root: {
     display: 'flex',
+    flexGrow: 1,
   },
   textField: {
     '& .MuiOutlinedInput-root': {
