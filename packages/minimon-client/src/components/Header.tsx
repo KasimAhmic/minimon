@@ -17,6 +17,11 @@ const useStyles = makeStyles()((theme) => ({
     height: 32,
     marginRight: theme.spacing(1),
   },
+  title: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.pxToRem(16),
+    },
+  },
   spacer: {
     flexGrow: 1,
   },
@@ -41,7 +46,9 @@ export const Header: FC = () => {
       <Toolbar className={classes.toolbar}>
         <img src={MinimonIcon} className={classes.minimonLogo} alt='Minimon Logo' />
 
-        <Typography variant='h6'>Minimon Admin</Typography>
+        <Typography variant='h6' className={classes.title}>
+          Minimon Admin
+        </Typography>
 
         <div className={classes.spacer} />
 
