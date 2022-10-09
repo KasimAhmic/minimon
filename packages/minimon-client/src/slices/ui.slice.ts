@@ -2,25 +2,25 @@ import { createSlice, Draft } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
 
 interface UiState {
-  menuOpen: boolean;
+  widgetSelectionOpen: boolean;
 }
 
 const initialState: UiState = {
-  menuOpen: false,
+  widgetSelectionOpen: false,
 };
 
 export const ui = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    toggleNavMenu: (state: Draft<UiState>) => {
-      state.menuOpen = !state.menuOpen;
+    toggleWidgetSelection: (state: Draft<UiState>) => {
+      state.widgetSelectionOpen = !state.widgetSelectionOpen;
     },
   },
 });
 
-export const selectMenuOpen = (state: RootState): boolean => state.ui.menuOpen;
+export const selectWidgetSelectionOpen = (state: RootState): boolean => state.ui.widgetSelectionOpen;
 
-export const { toggleNavMenu } = ui.actions;
+export const { toggleWidgetSelection } = ui.actions;
 
 export const { name: uiPath, reducer: uiReducer } = ui;

@@ -1,21 +1,27 @@
 import React, { FC } from 'react';
 import { Button, ButtonGroup, FormControlLabel, Paper, Switch, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { Header } from 'components/Header';
+import { SubmitTextField, WidgetSelection, Header } from 'components';
 import { makeStyles } from 'tss-react/mui';
 import { useSettingsSelector, useUpdateSettings, useReloadClients, useResetSettings } from 'hooks';
 import { ThemeMode } from '@ahmic/minimon-core';
-import { SubmitTextField } from 'components/SubmitTextField';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectWidgetSelectionOpen, toggleWidgetSelection } from 'slices';
 
-const headerHeight = 64;
+const normalHeaderHeight = 64;
+const mobileHeaderHeight = 56;
 
 export const useStyles = makeStyles()((theme) => ({
   root: {
     width: '100%',
-    height: `calc(100% - ${headerHeight}px)`,
-    marginTop: headerHeight,
+    height: `calc(100% - ${normalHeaderHeight}px)`,
+    marginTop: normalHeaderHeight,
     padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - ${mobileHeaderHeight}px)`,
+      marginTop: 56,
+    },
   },
   paper: {
     display: 'flex',
@@ -44,6 +50,9 @@ export const useStyles = makeStyles()((theme) => ({
     maxWidth: 1000,
     margin: '0 auto',
     padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2, 1, 2, 1),
+    },
   },
   sectionTitle: {
     position: 'sticky',
@@ -91,11 +100,16 @@ export const useStyles = makeStyles()((theme) => ({
 export const Admin: FC = () => {
   const { classes } = useStyles();
 
+  const dispatch = useAppDispatch();
+
   const settings = useSettingsSelector((settings) => settings);
 
   const [updateSettings, { isLoading: isUpdateSettingsLoading }] = useUpdateSettings();
   const [resetSettings, { isLoading: isResetSettingsLoading }] = useResetSettings();
   const [reloadClients, { isLoading: isReloadClientsLoading }] = useReloadClients();
+  const widgetSelectionOpen = useAppSelector(selectWidgetSelectionOpen);
+
+  const handleToggleWidgetSelection = () => dispatch(toggleWidgetSelection());
 
   return (
     <div className={classes.root}>
@@ -287,10 +301,12 @@ export const Admin: FC = () => {
               </div>
 
               <div className={classes.settingControl}>
-                <Button variant='contained' fullWidth>
-                  Unimplemented
+                <Button variant='contained' fullWidth onClick={handleToggleWidgetSelection}>
+                  {widgetSelectionOpen ? 'Collapse Widgets' : 'Expand Widgets'}
                 </Button>
               </div>
+
+              <WidgetSelection />
             </div>
           </div>
         </section>

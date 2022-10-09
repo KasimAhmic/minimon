@@ -5,3 +5,4 @@ export * from './Header';
 export * from './Icon';
 export * from './Loading';
 export * from './SubmitTextField';
+export * from './WidgetSelection';
