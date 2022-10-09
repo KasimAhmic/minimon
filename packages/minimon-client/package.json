@@ -47,6 +47,9 @@
     "eslint": "^8.21.0",
     "react-scripts": "5.0.1"
   },
+  "jest": {
+    "resetMocks": false
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -17,9 +17,11 @@ export const WidgetSelection: FC = () => {
   const open = useAppSelector(selectWidgetSelectionOpen);
 
   return (
-    <Collapse in={open}>
-      <div className={classes.root}>
-        <Typography variant='h6'>Widget Selection (WIP)</Typography>
+    <Collapse in={open} unmountOnExit>
+      <div className={classes.root} data-testid='widgetSelection'>
+        <Typography variant='h6' data-testid='widgetSelectionTitle'>
+          Widget Selection (WIP)
+        </Typography>
       </div>
     </Collapse>
   );
